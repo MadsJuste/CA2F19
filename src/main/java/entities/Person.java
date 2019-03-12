@@ -26,14 +26,16 @@ public class Person implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String firstName, lastName;
+    
     @OneToMany(cascade = CascadeType.ALL)
     private List<Phone> phones = new ArrayList();
-    @OneToMany(cascade = CascadeType.ALL)
-    @ManyToOne
+    
+    @ManyToOne(cascade = CascadeType.ALL)
     private Address address;
+    
     @ManyToMany (cascade = CascadeType.ALL)
     private List<Hobby> hobbies = new ArrayList();
 
@@ -92,6 +94,10 @@ public class Person implements Serializable {
 
     public void setHobbies(List<Hobby> hobbies) {
         this.hobbies = hobbies;
+    }
+
+    public void addHobby(Hobby hobby) {
+        hobbies.add(hobby);
     }
 
     

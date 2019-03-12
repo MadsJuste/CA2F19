@@ -21,13 +21,15 @@ public class Hobby implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    //hobbies
     @ManyToMany(mappedBy = "hobbies")
     private List<Person> persons = new ArrayList();
     
     private String description;
     
     private String name;
+
+    public Hobby() {
+    }
 
     public String getDescription() {
         return description;
@@ -51,10 +53,8 @@ public class Hobby implements Serializable {
 
     public void addPersons(Person person) {
         persons.add(person);
+        person.addHobby(this);
     }
-    
-    
-    
     
     
     public Long getId() {
@@ -63,31 +63,6 @@ public class Hobby implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Hobby)) {
-            return false;
-        }
-        Hobby other = (Hobby) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "entities.NewEntity[ id=" + id + " ]";
     }
     
 }
