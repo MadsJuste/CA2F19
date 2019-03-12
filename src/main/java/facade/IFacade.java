@@ -1,5 +1,9 @@
 package facade;
 
+import dto.PersonDTO;
+import dto.PersonsByAddressDTO;
+import dto.PersonsByHobbyDTO;
+import dto.PersonsByZipDTO;
 import entities.Address;
 import entities.Cityinfo;
 import entities.Hobby;
@@ -15,8 +19,11 @@ public interface IFacade {
     //getPersonsByAddress() : GET - api/person/{street}
     public PersonsByAddressDTO getPersonsByAddress(Address address);
 
+    /*
     //getPersonByPhone() : GET - api/person/{phone}
     public PersonByPhoneDTO getPersonByPhone(Phone phone);
+    */
+    /*
 
     //getPersonsByHobby() : GET api/person/{hobby}
     public PersonsByHobbyDTO getPersonsByHobby(Hobby hobby);
@@ -41,5 +48,6 @@ public interface IFacade {
     //DELETE
     //deletePersonByPhone() : DELETE api/person/{phone}
     public PersonDTO deletePersonByPhone(Phone phone); 
+    */
     
 }
