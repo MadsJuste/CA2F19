@@ -17,14 +17,11 @@ import java.util.List;
 public class SimplePersonWithAddressDTO {
 
     private String firstName, lastName;
-    private List<String> addresses = new ArrayList();
+    private String addresses;
 
     public SimplePersonWithAddressDTO(Person p) {
-        this.firstName = p.getFirstName();
-        this.lastName = p.getLastName();
-
-        for (Address a : p.getAddresses()) {
-            addresses.add(a.getStreet());
-        }
+        this.firstName = p.getFirstname();
+        this.lastName = p.getLastname();
+        addresses = p.getAddress().getStreet();
     }
 }

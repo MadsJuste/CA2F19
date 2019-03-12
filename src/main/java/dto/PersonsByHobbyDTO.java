@@ -21,7 +21,7 @@ public class PersonsByHobbyDTO {
 
     public PersonsByHobbyDTO(Hobby h) {
         this.hobby = h.getName();
-        for (Person p : h.getPersons()) {
+        for (Person p : h.getPersonCollection()) {
             persons.add(new SimplePersonDTO(p));
         }
     }

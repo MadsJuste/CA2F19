@@ -17,7 +17,8 @@ public class HobbyDTO {
 
     public HobbyDTO(Hobby h) {
         this.name = h.getName();
-        this.description = description;
+        this.description = h.getDescription();
+
     }
     
     

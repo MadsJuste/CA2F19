@@ -15,18 +15,16 @@ import java.util.List;
  * @author mwn
  */
 public class SimplePersonDTO {
-    
+
     private String firstName, lastName;
     private List<PhoneDTO> phones = new ArrayList();
 
     public SimplePersonDTO(Person p) {
-        this.firstName = p.getFirstName();
-        this.lastName = p.getLastName();
-        
-        for (Phone p : p.getPhones()) {
-            phones.add(new PhoneDTO(p));
+        this.firstName = p.getFirstname();
+        this.lastName = p.getLastname();
+        for (Phone phone : p.getPhoneCollection()) {
+            phones.add(new PhoneDTO(phone));
         }
     }
-    
-    
+
 }
