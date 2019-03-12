@@ -5,7 +5,6 @@ import dto.PersonsByAddressDTO;
 import dto.PersonsByHobbyDTO;
 import dto.PersonsByZipDTO;
 import entities.Address;
-import entities.Cityinfo;
 import entities.Hobby;
 import entities.Phone;
 

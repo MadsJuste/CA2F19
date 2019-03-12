@@ -5,7 +5,7 @@ import dto.PersonsByAddressDTO;
 import dto.PersonsByHobbyDTO;
 import dto.PersonsByZipDTO;
 import entities.Address;
-import entities.Cityinfo;
+import entities.CityInfo;
 import entities.Hobby;
 import entities.Phone;
 import javax.persistence.EntityManager;
@@ -26,8 +26,12 @@ public class Facade implements IFacade {
     }
     
     public static void main(String[] args) {
+    
+        Persistence.generateSchema("pu", null);
+        /*
         Facade f = new Facade(Persistence.createEntityManagerFactory("pu"));
         System.out.println(f.getPersonsByAddress(new Address("Strandvejen 215")));
+        */
     }
     
     @Override
@@ -65,7 +69,7 @@ public class Facade implements IFacade {
     }
 
     //@Override
-    public PersonsByZipDTO getPersonsByZip(Cityinfo cityinfo) {
+    public PersonsByZipDTO getPersonsByZip(CityInfo cityinfo) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

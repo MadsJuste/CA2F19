@@ -30,7 +30,7 @@ public class Person implements Serializable {
     private Integer id;
     private String firstName, lastName;
     
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "person")
     private List<Phone> phones = new ArrayList();
     
     @ManyToOne(cascade = CascadeType.ALL)
