@@ -14,6 +14,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 /**
@@ -31,6 +32,7 @@ public class Person implements Serializable {
     @OneToMany(cascade = CascadeType.ALL)
     private List<Phone> phones = new ArrayList();
     @OneToMany(cascade = CascadeType.ALL)
+    @ManyToOne
     private Address address;
     @ManyToMany (cascade = CascadeType.ALL)
     private List<Hobby> hobbies = new ArrayList();
