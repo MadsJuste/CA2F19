@@ -38,7 +38,6 @@ public class Facade implements IFacade {
             "SELECT NEW dto.PersonsByAddressDTO(a) FROM Address AS a WHERE a.street = :street"
             ,PersonsByAddressDTO.class)
             .setParameter("street", address.getStreet());
-            
             return (PersonsByAddressDTO) query.getSingleResult();
         } finally {
             em.close();
