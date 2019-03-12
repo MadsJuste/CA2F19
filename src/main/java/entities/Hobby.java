@@ -6,14 +6,20 @@
 package entities;
 
 import java.io.Serializable;
+import java.util.Collection;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -30,6 +36,12 @@ import javax.validation.constraints.Size;
     , @NamedQuery(name = "Hobby.findByDescription", query = "SELECT h FROM Hobby h WHERE h.description = :description")})
 public class Hobby implements Serializable {
 
+    @JoinTable(name = "hobby_has_person", joinColumns = {
+        @JoinColumn(name = "Hobby_name", referencedColumnName = "name", nullable = false)}, inverseJoinColumns = {
+        @JoinColumn(name = "Person_ID", referencedColumnName = "ID", nullable = false)})
+    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "hobby")
+    private Collection<Person> personCollection;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -44,7 +56,6 @@ public class Hobby implements Serializable {
     @Size(min = 1, max = 45)
     @Column(name = "description", nullable = false, length = 45)
     private String description;
-
     public Hobby() {
     }
 
@@ -96,6 +107,14 @@ public class Hobby implements Serializable {
     @Override
     public String toString() {
         return "entities.Hobby[ name=" + name + " ]";
+    }
+
+    public Collection<Person> getPersonCollection() {
+        return personCollection;
+    }
+
+    public void setPersonCollection(Collection<Person> personCollection) {
+        this.personCollection = personCollection;
     }
 
 }

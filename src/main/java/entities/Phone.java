@@ -31,7 +31,7 @@ import javax.validation.constraints.Size;
 public class Phone implements Serializable {
 
     private static final long serialVersionUID = 1L;
-     @Id
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Basic(optional = false)
@@ -43,8 +43,8 @@ public class Phone implements Serializable {
     public Phone() {
     }
 
-    public Phone(String description) {
-        this.number = description;
+    public Phone(String number) {
+        this.number = number;
     }
 
     public Integer getId() {
@@ -55,13 +55,12 @@ public class Phone implements Serializable {
         this.id = id;
     }
 
-    public String getDescription() {
+    public String getNumber() {
         return number;
     }
 
-    public void setDescription(String description) {
-        this.number = description;
+    public void setNumber(String number) {
+        this.number = number;
     }
-
 
 }

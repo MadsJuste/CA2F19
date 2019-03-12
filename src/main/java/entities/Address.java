@@ -38,7 +38,7 @@ import javax.validation.constraints.Size;
 public class Address implements Serializable {
 
     private static final long serialVersionUID = 1L;
-     @Id
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Basic(optional = false)
@@ -54,14 +54,14 @@ public class Address implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "Cityinfo_zipcode", nullable = false)
-    private int cityinfozipcode;
+    private String cityinfozipcode;
     @JoinColumn(name = "Cityinfo_zipcode1", referencedColumnName = "zipcode", nullable = false, insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Cityinfo cityinfo;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "address")
     private Collection<Person> personCollection;
 
-    public Address(String street, String additionalinfo, int cityinfozipcode, Cityinfo cityinfo, Collection<Person> personCollection) {
+    public Address(String street, String additionalinfo, String cityinfozipcode, Cityinfo cityinfo, Collection<Person> personCollection) {
         this.street = street;
         this.additionalinfo = additionalinfo;
         this.cityinfozipcode = cityinfozipcode;
@@ -105,11 +105,11 @@ public class Address implements Serializable {
         this.additionalinfo = additionalinfo;
     }
 
-    public int getCityinfozipcode() {
+    public String getCityinfozipcode() {
         return cityinfozipcode;
     }
 
-    public void setCityinfozipcode(int cityinfozipcode) {
+    public void setCityinfozipcode(String cityinfozipcode) {
         this.cityinfozipcode = cityinfozipcode;
     }
 
@@ -129,6 +129,6 @@ public class Address implements Serializable {
         this.personCollection = personCollection;
     }
 
-   
-    
+ 
+
 }

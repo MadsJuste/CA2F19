@@ -5,6 +5,9 @@
  */
 package dto;
 
+import entities.Hobby;
+import entities.Person;
+import entities.Phone;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,18 +23,18 @@ public class PersonDTO {
     private List<HobbyDTO> hobbies = new ArrayList();
 
     public PersonDTO(Person p) {
-        this.firstName = p.getFirstName();
-        this.lastName = p.getLastName();
+        this.firstName = p.getFirstname();
+        this.lastName = p.getLastname();
         this.email = p.getEmail();
         this.street = p.getAddress().getStreet();
-        this.zip = p.getAddress().getCityInfo().getZipCode();
-        this.city = p.getAddress().getCityInfo().getCity();
+        this.zip = p.getAddress().getCityinfozipcode();
+        this.city = p.getAddress().getCityinfo().getCity();
         
-        for (Phone p : p.getPhones()) {
-            phones.add(new PhoneDTO(p));
+        for (Phone phone : p.getPhoneCollection()) {
+            phones.add(new PhoneDTO(phone));
         }
         
-        for (Hobby h : p.getHobbies()) {
+        for (Hobby h : p.getHobbyCollection()) {
             hobbies.add(new HobbyDTO(h));
         }
     }

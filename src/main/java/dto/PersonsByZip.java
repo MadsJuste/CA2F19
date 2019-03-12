@@ -5,6 +5,7 @@
  */
 package dto;
 
+import entities.Person;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +19,7 @@ public class PersonsByZip {
     private List<SimplePersonWithAddressDTO> persons = new ArrayList();
 
     public PersonsByZip(String zip, List<Person> p) {
-        this.zip = zip();
+        this.zip = zip;
         for (Person person : p) {
             persons.add(new SimplePersonWithAddressDTO(person));
         }

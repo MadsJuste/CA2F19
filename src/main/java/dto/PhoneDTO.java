@@ -5,6 +5,8 @@
  */
 package dto;
 
+import entities.Phone;
+
 /**
  *
  * @author mwn
@@ -15,7 +17,7 @@ public class PhoneDTO {
 
     public PhoneDTO(Phone p) {
         this.number = p.getNumber();
-        this.description = p.getDescription();
+        this.description = p.getNumber();
     }
     
     

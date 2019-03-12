@@ -5,6 +5,8 @@
  */
 package dto;
 
+import entities.Address;
+import entities.Person;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,10 +20,10 @@ public class PersonsByAddressDTO {
     private List<SimplePersonDTO> persons = new ArrayList();
 
     public PersonsByAddressDTO(Address a) {
-        this.street = a.getAddress();
-        this.zip = a.getZip();
-        this.city = a.getCity();
-        for (Person p : a.getPersons()) {
+        this.street = a.getStreet();
+        this.zip = a.getCityinfozipcode();
+        this.city = a.getCityinfo().getCity();
+        for (Person p : a.getPersonCollection()) {
             persons.add(new SimplePersonDTO(p));
         }
     }

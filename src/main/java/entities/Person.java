@@ -15,6 +15,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -34,6 +35,9 @@ import javax.validation.constraints.Size;
     , @NamedQuery(name = "Person.findByFirstname", query = "SELECT p FROM Person p WHERE p.firstname = :firstname")
     , @NamedQuery(name = "Person.findByLastname", query = "SELECT p FROM Person p WHERE p.lastname = :lastname")})
 public class Person implements Serializable {
+
+    @ManyToMany(mappedBy = "personCollection")
+    private Collection<Hobby> hobbyCollection;
 
     private static final long serialVersionUID = 1L;
      @Id
@@ -116,6 +120,16 @@ public class Person implements Serializable {
 
     public void setAddress(Address address) {
         this.address = address;
+    }
+
+   
+
+    public Collection<Hobby> getHobbyCollection() {
+        return hobbyCollection;
+    }
+
+    public void setHobbyCollection(Collection<Hobby> hobbyCollection) {
+        this.hobbyCollection = hobbyCollection;
     }
 
   
