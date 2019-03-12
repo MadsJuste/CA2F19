@@ -36,6 +36,19 @@ public class Phone implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Integer id;
+
+    public Phone(String description, Person person) {
+        this.description = description;
+        this.person = person;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
     @Basic(optional = false)
     @Column(name = "description", nullable = false, length = 45)
     private String description;

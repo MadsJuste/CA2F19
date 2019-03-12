@@ -40,6 +40,21 @@ public class Person implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Integer id;
+
+    public Person(String email, String firstname, String lastname, Address address) {
+        this.email = email;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.address = address;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
     @Column(name = "email", length = 45)
     private String email;
     @Column(name = "firstname", length = 45)
