@@ -20,6 +20,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
 
 /**
  *
@@ -29,17 +30,33 @@ import javax.persistence.Table;
 @Table(name = "person")
 @NamedQueries({
     @NamedQuery(name = "Person.findAll", query = "SELECT p FROM Person p")
-    , @NamedQuery(name = "Person.findById", query = "SELECT p FROM Person p WHERE p.personPK.id = :id")
     , @NamedQuery(name = "Person.findByEmail", query = "SELECT p FROM Person p WHERE p.email = :email")
     , @NamedQuery(name = "Person.findByFirstname", query = "SELECT p FROM Person p WHERE p.firstname = :firstname")
-    , @NamedQuery(name = "Person.findByLastname", query = "SELECT p FROM Person p WHERE p.lastname = :lastname")
-    , @NamedQuery(name = "Person.findByAddressStreet", query = "SELECT p FROM Person p WHERE p.personPK.addressStreet = :addressStreet")})
+    , @NamedQuery(name = "Person.findByLastname", query = "SELECT p FROM Person p WHERE p.lastname = :lastname")})
 public class Person implements Serializable {
 
     private static final long serialVersionUID = 1L;
+     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Id
     private Integer id;
+    // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
+    @Size(max = 45)
+    @Column(name = "email", length = 45)
+    private String email;
+    @Size(max = 45)
+    @Column(name = "firstname", length = 45)
+    private String firstname;
+    @Size(max = 45)
+    @Column(name = "lastname", length = 45)
+    private String lastname;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "person")
+    private Collection<Phone> phoneCollection;
+    @JoinColumn(name = "Address_ID", referencedColumnName = "ID", nullable = false, insertable = false, updatable = false)
+    @ManyToOne(optional = false)
+    private Address address;
+
+    public Person() {
+    }
 
     public Person(String email, String firstname, String lastname, Address address) {
         this.email = email;
@@ -48,26 +65,17 @@ public class Person implements Serializable {
         this.address = address;
     }
 
+    public Person(String firstname, String lastname) {
+        this.firstname = firstname;
+        this.lastname = lastname;
+    }
+
     public Integer getId() {
         return id;
     }
 
     public void setId(Integer id) {
         this.id = id;
-    }
-    @Column(name = "email", length = 45)
-    private String email;
-    @Column(name = "firstname", length = 45)
-    private String firstname;
-    @Column(name = "lastname", length = 45)
-    private String lastname;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "person")
-    private Collection<Phone> phoneCollection;
-    @JoinColumn(name = "Address_Street", referencedColumnName = "Street", nullable = false, insertable = false, updatable = false)
-    @ManyToOne(optional = false)
-    private Address address;
-
-    public Person() {
     }
 
     public String getEmail() {
@@ -109,4 +117,7 @@ public class Person implements Serializable {
     public void setAddress(Address address) {
         this.address = address;
     }
+
+  
+  
 }

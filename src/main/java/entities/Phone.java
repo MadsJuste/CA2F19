@@ -13,11 +13,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  *
@@ -27,19 +27,24 @@ import javax.persistence.Table;
 @Table(name = "phone")
 @NamedQueries({
     @NamedQuery(name = "Phone.findAll", query = "SELECT p FROM Phone p")
-    , @NamedQuery(name = "Phone.findByNumber", query = "SELECT p FROM Phone p WHERE p.phonePK.number = :number")
-    , @NamedQuery(name = "Phone.findByDescription", query = "SELECT p FROM Phone p WHERE p.description = :description")
-    , @NamedQuery(name = "Phone.findByPersonID", query = "SELECT p FROM Phone p WHERE p.phonePK.personID = :personID")})
+    , @NamedQuery(name = "Phone.findByDescription", query = "SELECT p FROM Phone p WHERE p.description = :description")})
 public class Phone implements Serializable {
 
     private static final long serialVersionUID = 1L;
+     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Id
     private Integer id;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 45)
+    @Column(name = "description", nullable = false, length = 45)
+    private String number;
 
-    public Phone(String description, Person person) {
-        this.description = description;
-        this.person = person;
+    public Phone() {
+    }
+
+    public Phone(String description) {
+        this.number = description;
     }
 
     public Integer getId() {
@@ -49,29 +54,14 @@ public class Phone implements Serializable {
     public void setId(Integer id) {
         this.id = id;
     }
-    @Basic(optional = false)
-    @Column(name = "description", nullable = false, length = 45)
-    private String description;
-    @JoinColumn(name = "Person_ID", referencedColumnName = "ID", nullable = false, insertable = false, updatable = false)
-    @ManyToOne(optional = false)
-    private Person person;
-
-    public Phone() {
-    }
 
     public String getDescription() {
-        return description;
+        return number;
     }
 
     public void setDescription(String description) {
-        this.description = description;
+        this.number = description;
     }
 
-    public Person getPerson() {
-        return person;
-    }
 
-    public void setPerson(Person person) {
-        this.person = person;
-    }
 }
