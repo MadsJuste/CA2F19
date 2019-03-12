@@ -8,7 +8,7 @@ package rest;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import entities.Address;
-import entities.Cityinfo;
+import entities.CityInfo;
 import entities.Hobby;
 import entities.Phone;
 import facade.Facade;
