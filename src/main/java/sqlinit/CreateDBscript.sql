@@ -41,10 +41,12 @@ CREATE TABLE IF NOT EXISTS `CA2`.`Address` (
   `Street` VARCHAR(245) NOT NULL,
   `additionalinfo` VARCHAR(45) NOT NULL,
   `Cityinfo_zipcode` INT NOT NULL,
-  PRIMARY KEY (`Street`, `Cityinfo_zipcode`),
-  INDEX `fk_Address_Cityinfo1_idx` (`Cityinfo_zipcode` ASC),
+  `ID` VARCHAR(45) NOT NULL,
+  `Cityinfo_zipcode1` INT NOT NULL,
+  PRIMARY KEY (`ID`, `Cityinfo_zipcode1`),
+  INDEX `fk_Address_Cityinfo1_idx` (`Cityinfo_zipcode1` ASC),
   CONSTRAINT `fk_Address_Cityinfo1`
-    FOREIGN KEY (`Cityinfo_zipcode`)
+    FOREIGN KEY (`Cityinfo_zipcode1`)
     REFERENCES `CA2`.`Cityinfo` (`zipcode`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
@@ -59,12 +61,12 @@ CREATE TABLE IF NOT EXISTS `CA2`.`Person` (
   `email` VARCHAR(45) NULL,
   `firstname` VARCHAR(45) NULL,
   `lastname` VARCHAR(45) NULL,
-  `Address_Street` VARCHAR(245) NOT NULL,
-  PRIMARY KEY (`ID`, `Address_Street`),
-  INDEX `fk_Person_Address1_idx` (`Address_Street` ASC),
+  `Address_ID` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`ID`, `Address_ID`),
+  INDEX `fk_Person_Address1_idx` (`Address_ID` ASC),
   CONSTRAINT `fk_Person_Address1`
-    FOREIGN KEY (`Address_Street`)
-    REFERENCES `CA2`.`Address` (`Street`)
+    FOREIGN KEY (`Address_ID`)
+    REFERENCES `CA2`.`Address` (`ID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -74,7 +76,7 @@ ENGINE = InnoDB;
 -- Table `CA2`.`phone`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `CA2`.`phone` (
-  `number` BIGINT(8) NOT NULL,
+  `number` VARCHAR(45) NOT NULL,
   `description` VARCHAR(45) NOT NULL,
   `Person_ID` INT NOT NULL,
   PRIMARY KEY (`number`, `Person_ID`),
