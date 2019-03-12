@@ -7,6 +7,11 @@ package rest;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import entities.Address;
+import entities.Cityinfo;
+import entities.Hobby;
+import entities.Phone;
+import facade.Facade;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Consumes;
@@ -47,8 +52,9 @@ public class PersonResource {
     @GET
     @Path("{street}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getPersonsByAddress(@PathParam("street") String steet) {
+    public Response getPersonsByAddress(@PathParam("street") String street) {
        Address address = gson.fromJson(street, Address.class);
+       
        return Response.ok().entity(gson.toJson(f.getPersonsByAddress(address))).build();
     }
     
@@ -103,13 +109,14 @@ public class PersonResource {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response deletePersonByPhone(@PathParam("phone") String phone) {
         Phone p = gson.fromJson(phone, Phone.class);
-        return Response.ok().entity(gson.toJson(f.deletePerson(phone))).build();
+        return Response.ok().entity(gson.toJson(f.deletePersonByPhone(p))).build();
     }
     
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response addPerson(String content) {
-        pf.addPerson(JSONConverter.getPersonFromJson(content));
+        
+        f.addPerson(JSONConverter.getPersonFromJson(content));
         return Response.ok().build();
     }
 }

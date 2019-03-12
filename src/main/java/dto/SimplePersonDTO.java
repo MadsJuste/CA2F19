@@ -5,6 +5,8 @@
  */
 package dto;
 
+import entities.Person;
+import entities.Phone;
 import java.util.ArrayList;
 import java.util.List;
 

@@ -37,7 +37,7 @@ public class ZipResource {
      */
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public String getJson() {
+    public String getZipCodes() {
         //TODO return proper representation object
         throw new UnsupportedOperationException();
     }

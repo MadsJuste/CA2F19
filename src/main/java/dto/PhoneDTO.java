@@ -5,6 +5,8 @@
  */
 package dto;
 
+import entities.Phone;
+
 /**
  *
  * @author mwn

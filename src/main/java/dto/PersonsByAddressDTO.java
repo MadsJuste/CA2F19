@@ -5,6 +5,8 @@
  */
 package dto;
 
+import entities.Address;
+import entities.Person;
 import java.util.ArrayList;
 import java.util.List;
 
