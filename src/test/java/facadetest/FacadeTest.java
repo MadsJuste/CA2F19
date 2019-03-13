@@ -33,7 +33,7 @@ import static org.junit.Assert.*;
  */
 public class FacadeTest {
 
-    EntityManagerFactory emf = Persistence.createEntityManagerFactory("PU", null);
+    EntityManagerFactory emf = Persistence.createEntityManagerFactory("pu-test", null);
 
     Facade facade = new Facade(emf);
 
