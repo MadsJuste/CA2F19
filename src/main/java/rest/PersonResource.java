@@ -10,6 +10,7 @@ import com.google.gson.GsonBuilder;
 import entities.Address;
 import entities.CityInfo;
 import entities.Hobby;
+import entities.Person;
 import entities.Phone;
 import facade.Facade;
 import javax.persistence.Persistence;
@@ -26,11 +27,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-/**
- * REST Web Service
- *
- * @author Madsj
- */
+
 @Path("person")
 public class PersonResource {
     
@@ -39,16 +36,10 @@ public class PersonResource {
     Gson gson = new GsonBuilder().setPrettyPrinting().create();
     Facade f = new Facade(Persistence.createEntityManagerFactory("PU"));
 
-    /**
-     * Creates a new instance of PersonResource
-     */
+    
     public PersonResource() {
     }
 
-    /**
-     * Retrieves representation of an instance of rest.PersonResource
-     * @return an instance of java.lang.String
-     */
     
     @GET
     @Path("{street}")
@@ -92,16 +83,12 @@ public class PersonResource {
     }
     
     
-
-    /**
-     * PUT method for updating or creating an instance of PersonResource
-     * @param content representation for the resource
-     */
     @PUT
     @Path("{phone}")
     @Consumes(MediaType.APPLICATION_JSON)
     public void editPersonByPhone(String phone) {
-        
+        Person p = gson.fromJson(@PathParam("phone"), Person.class);
+        return Response.ok().entity(gson.toJson(f.editPersonByPhone(p))).build();
         
     }
     
@@ -109,7 +96,7 @@ public class PersonResource {
     @Path("delete/{phone}")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response deletePersonByPhone(@PathParam("phone") String phone) {
-        Phone p = gson.fromJson(phone, Phone.class);
+        Person p = gson.fromJson(@PathParam("phone"), Person.class);
         return Response.ok().entity(gson.toJson(f.deletePersonByPhone(p))).build();
     }
     
