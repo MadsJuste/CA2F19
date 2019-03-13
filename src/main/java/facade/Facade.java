@@ -8,6 +8,7 @@ import entities.Address;
 import entities.CityInfo;
 import entities.Hobby;
 import entities.Person;
+import entities.Phone;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
@@ -43,7 +44,7 @@ public class Facade implements IFacade {
         }
     }
     @Override
-    public PersonDTO getPersonByPhone(Phone phone) {
+    public PersonByPhoneDTO getPersonByPhone(Phone phone) {
         EntityManager em = emf.createEntityManager();
         try {
             
