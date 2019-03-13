@@ -12,6 +12,7 @@ import entities.CityInfo;
 import entities.Hobby;
 import entities.Phone;
 import facade.Facade;
+import javax.persistence.Persistence;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Consumes;
@@ -36,7 +37,7 @@ public class PersonResource {
     @Context
     private UriInfo context;
     Gson gson = new GsonBuilder().setPrettyPrinting().create();
-    Facade f = new Facade();
+    Facade f = new Facade(Persistence.createEntityManagerFactory("PU"));
 
     /**
      * Creates a new instance of PersonResource

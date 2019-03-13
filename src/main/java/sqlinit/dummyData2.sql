@@ -28,9 +28,9 @@ INSERT INTO `CA2`.`Hobby` (`name`, `description`) VALUES ('Handball', 'Test');
 INSERT INTO `CA2`.`Hobby` (`name`, `description`) VALUES ('Surfing', 'Test');
 INSERT INTO `CA2`.`Hobby` (`name`, `description`) VALUES ('Golf', 'Test');
 
-INSERT INTO `CA2`.`person_hobby` (`hobbies_id`, `Person_ID`) VALUES ('4', '1');
-INSERT INTO `CA2`.`person_hobby` (`hobbies_id`, `Person_ID`) VALUES ('3', '1');
-INSERT INTO `CA2`.`person_hobby` (`hobbies_id`, `Person_ID`) VALUES ('2', '2');
-INSERT INTO `CA2`.`person_hobby` (`hobbies_id`, `Person_ID`) VALUES ('1', '2');
+INSERT INTO `CA2`.`person_hobby` (`hobbies_id`, `Persons_ID`) VALUES ('4', '1');
+INSERT INTO `CA2`.`person_hobby` (`hobbies_id`, `Persons_ID`) VALUES ('3', '1');
+INSERT INTO `CA2`.`person_hobby` (`hobbies_id`, `Persons_ID`) VALUES ('2', '2');
+INSERT INTO `CA2`.`person_hobby` (`hobbies_id`, `Persons_ID`) VALUES ('1', '2');
 
 
