@@ -103,17 +103,11 @@ public class Person implements Serializable {
         return phones;
     }
 
-<<<<<<< HEAD
     public void addPhones(Phone phone) {
         this.phones.add(phone);
         if(phone.getPerson()==null) {
             phone.setPerson(this);
         }
-        
-=======
-    public void addPhone(Phone phone) {
-        phones.add(phone);
->>>>>>> 0a6bd7f1384ccf00dd0beb2c3344146a88725fad
     }
 
     public String getEmail() {
