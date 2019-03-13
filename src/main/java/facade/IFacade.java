@@ -53,4 +53,6 @@ public interface IFacade {
     //deletePersonByPhone() : DELETE api/person/{phone}
     public SimplePersonDTO deletePersonByPhone(Phone phone); 
     
+    public CityInfo zipAssister(CityInfo cityinfo);
+    
 }

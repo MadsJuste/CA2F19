@@ -88,9 +88,9 @@ public class Facade implements IFacade {
             Query query = em.createQuery(
                     "SELECT NEW dto.PersonsByZipDTO(a) FROM CityInfo AS a WHERE a.zip = :zip",
                     PersonsByZipDTO.class)
-                    .setParameter("zip", cityinfo.getZip());
-
-            return (PersonsByZipDTO) query.getSingleResult();
+                    .setParameter("zip", cityinfo.getZip()).setMaxResults(1);
+            PersonsByZipDTO pbzDTO = (PersonsByZipDTO) query.getSingleResult();
+            return pbzDTO;
         } finally {
             em.close();
         }
@@ -129,6 +129,13 @@ public class Facade implements IFacade {
     public PersonDTO createPerson(Person person) {
         EntityManager em = emf.createEntityManager();
         try {
+            /*
+            CityInfo ci = zipAssister(person.getAddress().getCityinfo());
+            System.out.println(ci.getZip() + " " + ci.getId());
+            if (ci != null) {
+            person.getAddress().getCityinfo().setId(ci.getId());
+            }
+            */
             em.getTransaction().begin();
             em.persist(person);
             em.getTransaction().commit();
@@ -184,4 +191,18 @@ public class Facade implements IFacade {
         }
     }
 
+    @Override
+    public CityInfo zipAssister(CityInfo cityinfo) {
+        EntityManager em = emf.createEntityManager();
+        try {
+            Query query = em.createQuery(
+                    "SELECT a FROM CityInfo a WHERE a.zip = :zip")
+                    .setParameter("zip", cityinfo.getZip());
+            
+                
+            return (CityInfo) query.getSingleResult();
+        } finally {
+            em.close();
+        }
+    }
 }

@@ -74,8 +74,14 @@ public class CityInfo implements Serializable {
     }
 
     public void addAddress(Address address) {
-        addresses.add(address);
+        this.addresses.add(address);
+        if (address.getCityinfo()==null) {
+            address.setCityinfo(this);
+        }
+        
+        /*     addresses.add(address);
         address.setCityinfo(this);
+        */ 
     }
 
 

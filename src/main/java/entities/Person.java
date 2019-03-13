@@ -34,7 +34,7 @@ public class Person implements Serializable {
     @OneToMany(mappedBy = "person", cascade = CascadeType.ALL)
     private List<Phone> phones = new ArrayList();
     
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne(cascade = {CascadeType.PERSIST,CascadeType.MERGE})
     private Address address;
     
     @ManyToMany (cascade = CascadeType.ALL)
@@ -47,6 +47,7 @@ public class Person implements Serializable {
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
+        address.addPerson(this);
     }
 
     public Person(String firstName, String lastName, String email) {
