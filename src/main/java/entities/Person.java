@@ -29,6 +29,7 @@ public class Person implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String firstName, lastName;
+    private String email;
     
     @OneToMany(mappedBy = "person")
     private List<Phone> phones = new ArrayList();
@@ -79,6 +80,16 @@ public class Person implements Serializable {
     public void setPhones(List<Phone> phones) {
         this.phones = phones;
     }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+    
+    
 
     public Address getAddress() {
         return address;
