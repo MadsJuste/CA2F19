@@ -132,12 +132,7 @@ public class Facade implements IFacade {
             em.persist(person);
             em.getTransaction().commit();
 
-            Query query = em.createQuery(
-                    "SELECT NEW dto.PersonDTO(a) FROM Person AS a WHERE a.email = :email",
-                    PersonDTO.class)
-                    .setParameter("email", person.getEmail());
-
-            return (PersonDTO) query.getSingleResult();
+            return new PersonDTO(person);
         } finally {
             em.close();
         }
