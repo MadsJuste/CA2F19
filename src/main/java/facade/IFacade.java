@@ -1,5 +1,7 @@
 package facade;
 
+import dto.CountByHobbyDTO;
+import dto.PersonByPhoneDTO;
 import dto.PersonDTO;
 import dto.PersonsByAddressDTO;
 import dto.PersonsByHobbyDTO;
@@ -29,17 +31,17 @@ public interface IFacade {
     //getPersonsByZip() : GET api/person/{zip}
     public PersonsByZipDTO getPersonsByZip(CityInfo cityinfo);
 
-/*
     //getCountByHobby() : GET api/person/count/{hobby}
     public CountByHobbyDTO getCountByHobby(Hobby hobby);
+/*
 
     //getZipCodes() : GET api/zip/
-    public ZipCodesDTO getZipCodes(CityInfo cityinfo);
+    public ZipCodesDTO getZipCodes();
 */
 
     //POST
     //createPerson() : POST api/person
-    public PersonDTO createPerson(String content); //parameter check
+    public PersonDTO createPerson(Person person); //parameter check
     
     //PUT
     //editPersonByPhone() : PUT api/person/{phone}
@@ -47,6 +49,6 @@ public interface IFacade {
 
     //DELETE
     //deletePersonByPhone() : DELETE api/person/{phone}
-    public PersonDTO deletePersonByPhone(Person person); 
+    public PersonDTO deletePersonByPhone(Phone phone); 
     
 }
