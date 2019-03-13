@@ -12,6 +12,11 @@ import entities.CityInfo;
 import entities.Hobby;
 import entities.Person;
 import entities.Phone;
+import exceptions.AddressNotFoundException;
+import exceptions.HobbyNotFoundException;
+import exceptions.PersonFailedException;
+import exceptions.PhoneNotFoundException;
+import exceptions.ZipNotFoundException;
 import facade.Facade;
 import javax.persistence.Persistence;
 import javax.ws.rs.core.Context;
@@ -27,83 +32,126 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-
 @Path("person")
 public class PersonResource {
-    
+
     @Context
     private UriInfo context;
     Gson gson = new GsonBuilder().setPrettyPrinting().create();
     Facade f = new Facade(Persistence.createEntityManagerFactory("PU"));
 
-    
     public PersonResource() {
     }
 
-    
     @GET
     @Path("{street}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getPersonsByAddress(@PathParam("street") String street) {
-       Address address = gson.fromJson(street, Address.class);
-       
-       return Response.ok().entity(gson.toJson(f.getPersonsByAddress(address))).build();
+    public Response getPersonsByAddress(@PathParam("street") String street) throws AddressNotFoundException {
+        Address address = gson.fromJson(street, Address.class);
+        if (address == null) {
+            return Response.status(404)
+                    .entity(gson.toJson(new AddressNotFoundException("no Address found")))
+                    .type(MediaType.APPLICATION_JSON).
+                    build();
+        }
+        return Response.ok().entity(gson.toJson(f.getPersonsByAddress(address))).build();
     }
-    
+
     @GET
     @Path("{phone}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getPersonByPhone(@PathParam("phone") String phone) {
+    public Response getPersonByPhone(@PathParam("phone") String phone) throws PhoneNotFoundException {
         Phone p = gson.fromJson(phone, Phone.class);
-       return Response.ok().entity(gson.toJson(f.getPersonByPhone(p))).build();
+        if (p == null) {
+            return Response.status(404)
+                    .entity(gson.toJson(new PhoneNotFoundException("Phone number unknown")))
+                    .type(MediaType.APPLICATION_JSON).
+                    build();
+        }
+        return Response.ok().entity(gson.toJson(f.getPersonByPhone(p))).build();
     }
-    
+
     @GET
     @Path("{hobby}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getPersonsByHobby(@PathParam("hobby") String hobby) {
+    public Response getPersonsByHobby(@PathParam("hobby") String hobby) throws HobbyNotFoundException {
         Hobby h = gson.fromJson(hobby, Hobby.class);
-      return Response.ok().entity(gson.toJson(f.getPersonsByHobby(h))).build();
+        if (h == null) {
+            return Response.status(404)
+                    .entity(gson.toJson(new HobbyNotFoundException("Hobby unknown")))
+                    .type(MediaType.APPLICATION_JSON).
+                    build();
+        }
+        return Response.ok().entity(gson.toJson(f.getPersonsByHobby(h))).build();
     }
-    
+
     @GET
     @Path("{zip}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getPersonsByZip(@PathParam("zip") String zip) {
-         CityInfo ci = gson.fromJson(zip, CityInfo.class);
-      return Response.ok().entity(gson.toJson(f.getPersonsByZip(ci))).build();
+    public Response getPersonsByZip(@PathParam("zip") String zip) throws ZipNotFoundException {
+        CityInfo ci = gson.fromJson(zip, CityInfo.class);
+        if (ci == null) {
+            return Response.status(404)
+                    .entity(gson.toJson(new ZipNotFoundException("ZIP unknown")))
+                    .type(MediaType.APPLICATION_JSON).
+                    build();
+        }
+        return Response.ok().entity(gson.toJson(f.getPersonsByZip(ci))).build();
     }
-    
+
     @GET
     @Path("count/{hobby}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getCountByHobby(@PathParam("hobby") String hobby) {
-         Hobby h = gson.fromJson(hobby, Hobby.class);
-      return Response.ok().entity(gson.toJson(f.getCountByHobby(h))).build();
+    public Response getCountByHobby(@PathParam("hobby") String hobby) throws HobbyNotFoundException {
+        Hobby h = gson.fromJson(hobby, Hobby.class);
+        if (h == null) {
+            return Response.status(404)
+                    .entity(gson.toJson(new HobbyNotFoundException("Hobby unknown")))
+                    .type(MediaType.APPLICATION_JSON).
+                    build();
+        }
+        return Response.ok().entity(gson.toJson(f.getCountByHobby(h))).build();
     }
-    
-    
+
     @PUT
     @Path("{phone}")
     @Consumes(MediaType.APPLICATION_JSON)
-    public void editPersonByPhone(@PathParam("phone") String phone) {
+    public Response editPersonByPhone(@PathParam("phone") String phone) throws PhoneNotFoundException {
         Person p = gson.fromJson(phone, Person.class);
+        if (p == null) {
+            return Response.status(404)
+                    .entity(gson.toJson(new PhoneNotFoundException("Phone number unknown")))
+                    .type(MediaType.APPLICATION_JSON).
+                    build();
+        }
         return Response.ok().entity(gson.toJson(f.editPersonByPhone(p))).build();
-        
+
     }
-    
+
     @DELETE
     @Path("delete/{phone}")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response deletePersonByPhone(@PathParam("phone") String phone) {
-        Person p = gson.fromJson(phone, Person.class);
+    public Response deletePersonByPhone(@PathParam("phone") String phone) throws PhoneNotFoundException {
+        Phone p = gson.fromJson(phone, Phone.class);
+        if (p == null) {
+            return Response.status(404)
+                    .entity(gson.toJson(new PhoneNotFoundException("Phone number unknown")))
+                    .type(MediaType.APPLICATION_JSON).
+                    build();
+        }
         return Response.ok().entity(gson.toJson(f.deletePersonByPhone(p))).build();
     }
-    
+
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response addPerson(String content) {
+    public Response addPerson(String content) throws PersonFailedException {
         Person p = gson.fromJson(content, Person.class);
+        if (p == null) {
+            return Response.status(404)
+                    .entity(gson.toJson(new PersonFailedException("Content for creating person is incorrect")))
+                    .type(MediaType.APPLICATION_JSON).
+                    build();
+        }
         return Response.ok().entity(gson.toJson(f.createPerson(p))).build();
     }
 }
