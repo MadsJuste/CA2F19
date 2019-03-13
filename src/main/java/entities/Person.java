@@ -103,8 +103,8 @@ public class Person implements Serializable {
         return phones;
     }
 
-    public void setPhones(List<Phone> phones) {
-        this.phones = phones;
+    public void addPhone(Phone phone) {
+        phones.add(phone);
     }
 
     public String getEmail() {
