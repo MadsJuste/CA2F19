@@ -56,7 +56,7 @@ public class Facade implements IFacade {
             Query query = em.createQuery(
                     "SELECT NEW dto.PersonByPhoneDTO(a) FROM Phone AS a WHERE a.number = :number",
                      PersonByPhoneDTO.class)
-                    .setParameter("street", phone.getNumber());
+                    .setParameter("number", phone.getNumber());
 
             return (PersonByPhoneDTO) query.getSingleResult();
         } finally {
@@ -118,7 +118,13 @@ public class Facade implements IFacade {
      */
     @Override
     public PersonDTO createPerson(Person person) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        EntityManager em = emf.createEntityManager();
+        try {
+            Query query = em.createQuery("SELECT NEW dto.PersonDTO(a) FROM ", PersonDTO.class).setParameter("", em);
+        } finally {
+            em.close();
+        }
+
     }
 
     @Override
