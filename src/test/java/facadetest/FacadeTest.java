@@ -81,6 +81,8 @@ public class FacadeTest {
             phone1.setPerson(p1);
             phone2.setPerson(p2);
             phone3.setPerson(p3);
+            
+        //    p3.addPhone(phone3);
 
             em.persist(p1);
             em.persist(p2);
