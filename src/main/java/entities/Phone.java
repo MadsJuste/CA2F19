@@ -66,6 +66,12 @@ public class Phone implements Serializable {
         this.number = number;
         this.description = description;
     }
+
+    public Phone(String number) {
+        this.number = number;
+    }
+    
+    
     
     public Integer getId() {
         return id;

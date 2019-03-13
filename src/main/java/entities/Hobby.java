@@ -64,5 +64,9 @@ public class Hobby implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
+
+    public Hobby(String name) {
+        this.name = name;
+    }
     
 }

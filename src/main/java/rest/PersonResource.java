@@ -79,7 +79,7 @@ public class PersonResource {
     @Path("{zip}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getPersonsByZip(@PathParam("zip") String zip) {
-         Cityinfo ci = gson.fromJson(zip, Cityinfo.class);
+         CityInfo ci = gson.fromJson(zip, CityInfo.class);
       return Response.ok().entity(gson.toJson(f.getPersonsByZip(ci))).build();
     }
     
