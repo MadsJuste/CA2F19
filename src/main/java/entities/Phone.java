@@ -52,6 +52,7 @@ public class Phone implements Serializable {
 
     public void setPerson(Person person) {
         this.person = person;
+        
     }
 
     public Phone() {

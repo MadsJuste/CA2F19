@@ -31,7 +31,7 @@ public class Person implements Serializable {
     private String firstName, lastName;
     private String email;
     
-    @OneToMany(mappedBy = "person")
+    @OneToMany(mappedBy = "person", cascade = CascadeType.ALL)
     private List<Phone> phones = new ArrayList();
     
     @ManyToOne(cascade = CascadeType.ALL)
@@ -103,8 +103,17 @@ public class Person implements Serializable {
         return phones;
     }
 
+<<<<<<< HEAD
+    public void addPhones(Phone phone) {
+        this.phones.add(phone);
+        if(phone.getPerson()==null) {
+            phone.setPerson(this);
+        }
+        
+=======
     public void addPhone(Phone phone) {
         phones.add(phone);
+>>>>>>> 0a6bd7f1384ccf00dd0beb2c3344146a88725fad
     }
 
     public String getEmail() {
@@ -136,6 +145,8 @@ public class Person implements Serializable {
     public void addHobby(Hobby hobby) {
         hobbies.add(hobby);
     }
+    
+    
 
     
     
