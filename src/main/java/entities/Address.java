@@ -30,7 +30,7 @@ public class Address implements Serializable {
     private String street;
     private String additionalInfo;
     
-    @OneToMany(mappedBy = "address")
+    @OneToMany(mappedBy = "address", cascade = CascadeType.ALL)
     private List<Person> persons = new ArrayList();
     
     @ManyToOne(cascade = CascadeType.ALL)
