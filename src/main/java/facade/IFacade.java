@@ -5,7 +5,9 @@ import dto.PersonsByAddressDTO;
 import dto.PersonsByHobbyDTO;
 import dto.PersonsByZipDTO;
 import entities.Address;
+import entities.CityInfo;
 import entities.Hobby;
+import entities.Person;
 import entities.Phone;
 
 /**
@@ -18,23 +20,22 @@ public interface IFacade {
     //getPersonsByAddress() : GET - api/person/{street}
     public PersonsByAddressDTO getPersonsByAddress(Address address);
 
-    /*
     //getPersonByPhone() : GET - api/person/{phone}
     public PersonByPhoneDTO getPersonByPhone(Phone phone);
-    */
-    /*
 
     //getPersonsByHobby() : GET api/person/{hobby}
     public PersonsByHobbyDTO getPersonsByHobby(Hobby hobby);
 
     //getPersonsByZip() : GET api/person/{zip}
-    public PersonsByZipDTO getPersonsByZip(Cityinfo cityinfo);
+    public PersonsByZipDTO getPersonsByZip(CityInfo cityinfo);
 
+/*
     //getCountByHobby() : GET api/person/count/{hobby}
     public CountByHobbyDTO getCountByHobby(Hobby hobby);
 
     //getZipCodes() : GET api/zip/
-    public ZipCodesDTO getZipCodes(Cityinfo cityinfo);
+    public ZipCodesDTO getZipCodes(CityInfo cityinfo);
+*/
 
     //POST
     //createPerson() : POST api/person
@@ -42,11 +43,10 @@ public interface IFacade {
     
     //PUT
     //editPersonByPhone() : PUT api/person/{phone}
-    public PersonDTO editPersonByPhone(Phone phone);
+    public PersonDTO editPersonByPhone(Person person);
 
     //DELETE
     //deletePersonByPhone() : DELETE api/person/{phone}
-    public PersonDTO deletePersonByPhone(Phone phone); 
-    */
+    public PersonDTO deletePersonByPhone(Person person); 
     
 }

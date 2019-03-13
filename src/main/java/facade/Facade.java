@@ -7,10 +7,9 @@ import dto.PersonsByZipDTO;
 import entities.Address;
 import entities.CityInfo;
 import entities.Hobby;
-import entities.Phone;
+import entities.Person;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.persistence.Query;
 
 /**
@@ -27,11 +26,6 @@ public class Facade implements IFacade {
     
     public static void main(String[] args) {
     
-        Persistence.generateSchema("pu", null);
-        /*
-        Facade f = new Facade(Persistence.createEntityManagerFactory("pu"));
-        System.out.println(f.getPersonsByAddress(new Address("Strandvejen 215")));
-        */
     }
     
     @Override
@@ -42,18 +36,26 @@ public class Facade implements IFacade {
             "SELECT NEW dto.PersonsByAddressDTO(a) FROM Address AS a WHERE a.street = :street"
             ,PersonsByAddressDTO.class)
             .setParameter("street", address.getStreet());
+            
             return (PersonsByAddressDTO) query.getSingleResult();
         } finally {
             em.close();
         }
     }
-
-    //@Override
+    @Override
     public PersonDTO getPersonByPhone(Phone phone) {
+        EntityManager em = emf.createEntityManager();
+        try {
+            
+        } finally {
+            em.close();
+        }
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+/*
+*/
 
-    //@Override
+    @Override
     public PersonsByHobbyDTO getPersonsByHobby(Hobby hobby) {
         EntityManager em = emf.createEntityManager();
         try {
@@ -68,36 +70,44 @@ public class Facade implements IFacade {
         }
     }
 
-    //@Override
+    @Override
     public PersonsByZipDTO getPersonsByZip(CityInfo cityinfo) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        EntityManager em = emf.createEntityManager();
+        try {
+            Query query = em.createQuery(
+            "SELECT NEW dto.PersensByZipDTO(a) FROM CityInfo AS a WHERE a.zip = :zip"
+            ,PersonsByZipDTO.class)
+            .setParameter("zip", cityinfo.getZip());
+            
+            return (PersonsByZipDTO) query.getSingleResult();
+        } finally {
+            em.close();
+        }        
     }
-
-    //@Override 
-    /*
+/*
+    @Override 
     public CountByHobbyDTO getCountByHobby(Hobby hobby) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    */
-/*
-    //@Override
-    public ZipCodesDTO getZipCodes(Cityinfo cityinfo) {
+   
+    @Override
+    public ZipCodesDTO getZipCodes(CityInfo cityinfo) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    */
+*/
 
-    //@Override
+    @Override
     public PersonDTO createPerson(String content) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    //@Override
-    public PersonDTO editPersonByPhone(Phone phone) {
+    @Override
+    public PersonDTO editPersonByPhone(Person person) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    //@Override
-    public PersonDTO deletePersonByPhone(Phone phone) {
+    @Override
+    public PersonDTO deletePersonByPhone(Person person) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
