@@ -21,9 +21,9 @@ public class PersonsByAddressDTO {
 
     public PersonsByAddressDTO(Address a) {
         this.street = a.getStreet();
-        this.zip = a.getCityinfozipcode();
+        this.zip = a.getCityinfo().getZip();
         this.city = a.getCityinfo().getCity();
-        for (Person p : a.getPersonCollection()) {
+        for (Person p : a.getPersons()) {
             persons.add(new SimplePersonDTO(p));
         }
     }

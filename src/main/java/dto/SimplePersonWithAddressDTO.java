@@ -20,8 +20,8 @@ public class SimplePersonWithAddressDTO {
     private String addresses;
 
     public SimplePersonWithAddressDTO(Person p) {
-        this.firstName = p.getFirstname();
-        this.lastName = p.getLastname();
+        this.firstName = p.getFirstName();
+        this.lastName = p.getLastName();
         addresses = p.getAddress().getStreet();
     }
 }

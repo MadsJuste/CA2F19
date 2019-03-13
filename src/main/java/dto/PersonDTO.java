@@ -23,18 +23,18 @@ public class PersonDTO {
     private List<HobbyDTO> hobbies = new ArrayList();
 
     public PersonDTO(Person p) {
-        this.firstName = p.getFirstname();
-        this.lastName = p.getLastname();
+        this.firstName = p.getFirstName();
+        this.lastName = p.getLastName();
         this.email = p.getEmail();
         this.street = p.getAddress().getStreet();
-        this.zip = p.getAddress().getCityinfozipcode();
+        this.zip = p.getAddress().getCityinfo().getZip();
         this.city = p.getAddress().getCityinfo().getCity();
         
-        for (Phone phone : p.getPhoneCollection()) {
+        for (Phone phone : p.getPhones()) {
             phones.add(new PhoneDTO(phone));
         }
         
-        for (Hobby h : p.getHobbyCollection()) {
+        for (Hobby h : p.getHobbies()) {
             hobbies.add(new HobbyDTO(h));
         }
     }
