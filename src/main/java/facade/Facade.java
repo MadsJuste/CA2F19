@@ -7,6 +7,7 @@ import dto.PersonDTO;
 import dto.PersonsByAddressDTO;
 import dto.PersonsByHobbyDTO;
 import dto.PersonsByZipDTO;
+import dto.SimplePersonDTO;
 import entities.Address;
 import entities.CityInfo;
 import entities.Hobby;
@@ -160,28 +161,25 @@ public class Facade implements IFacade {
     }
 
     @Override
-    public PersonDTO deletePersonByPhone(Phone phone) {
+    public SimplePersonDTO deletePersonByPhone(Phone phone) {
         EntityManager em = emf.createEntityManager();
+        Person person = null;
         try {
-
-            Query query2 = em.createQuery(
-            "SELECT p FROM Person p JOIN p.phones ph WHERE ph.number = :number");
-            query2.setParameter("number", phone.getNumber());
-            
-            Query query1 = em.createQuery(
-            "SELECT NEW dto.PersonDTO(a) FROM Person a JOIN a.phones pho WHERE pho.number = :number",
-                    PersonDTO.class)
-                    .setParameter("number", phone.getNumber());
-
-            Person person = (Person) query2.getSingleResult();
-            PersonDTO pDTO = (PersonDTO) query1.getSingleResult();
-
             em.getTransaction().begin();
+            Query query2 = em.createQuery(
+                    "SELECT p FROM Person p JOIN p.phones ph WHERE ph.number = :number");
+            query2.setParameter("number", phone.getNumber());
+
+            person = (Person) query2.getSingleResult();
+
+            SimplePersonDTO pDTO = new SimplePersonDTO(person);
+
             em.remove(person);
             em.getTransaction().commit();
-
             return pDTO;
+
         } finally {
+
             em.close();
         }
     }
