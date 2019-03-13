@@ -5,6 +5,7 @@
  */
 package facadetest;
 
+import dto.AllCitiesAndAllZipCodesDTO;
 import dto.CountByHobbyDTO;
 import dto.PersonByPhoneDTO;
 import dto.PersonsByAddressDTO;
@@ -102,7 +103,7 @@ public class FacadeTest {
         PersonsByAddressDTO res = facade.getPersonsByAddress(new Address("Klampenborgvej 38"));
         assertEquals("Lyngby", res.getCity());
     }
-    
+
     @Test
     public void testGetPersonByPhone() {
         PersonByPhoneDTO res = facade.getPersonByPhone(new Phone("75839204"));
@@ -114,24 +115,42 @@ public class FacadeTest {
         PersonsByHobbyDTO res = facade.getPersonsByHobby(new Hobby("Soccer"));
         assertEquals(2, res.getPersons().size());
     }
-    
+
     @Test
     public void testGetPersonsByZip() {
         PersonsByZipDTO res = facade.getPersonsByZip(new CityInfo("2950"));
         assertEquals(2, res.getPersons().size());
     }
-    
+
     @Test
     public void testGetCountByHobby() {
         CountByHobbyDTO res = facade.getCountByHobby(new Hobby("Soccer"));
         assertEquals(2, res.getCount());
     }
-    
+
     @Test
-    public void testDeletePersonByPhone() {
-        facade.deletePersonByPhone(new Phone("28475739"));
-        PersonsByZipDTO res = facade.getPersonsByZip(new CityInfo("2950"));
-        assertEquals(2, res.getPersons().size());
+    public void testGetZipCodes() {
+        AllCitiesAndAllZipCodesDTO res = facade.getZipCodes();
+        assertEquals(2, res.getCityzipMap().size());
     }
 
+    @Test
+    public void testCreatePerson() {
+        Address a = new Address("Nørregaardsvej 25");
+        a.setCityinfo(new CityInfo("2800"));
+        Person p = new Person("Jens", "Mikkelsen", a);
+        facade.createPerson(p);
+        PersonsByZipDTO res = facade.getPersonsByZip(new CityInfo("2800"));
+        assertEquals(3, res.getPersons().size());
+    }
+
+    @Test
+    public void testEditPersonByPhone() {
+
+    }
+
+    @Test
+    public void testDeletePersonByPhone() {
+
+    }
 }
