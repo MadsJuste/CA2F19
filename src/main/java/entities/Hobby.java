@@ -27,7 +27,6 @@ public class Hobby implements Serializable {
     
     private String description;
     
-    @Column(unique = true)
     private String name;
 
     public Hobby() {

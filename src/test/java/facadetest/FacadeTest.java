@@ -6,6 +6,7 @@
 package facadetest;
 
 import dto.PersonsByAddressDTO;
+import dto.PersonsByHobbyDTO;
 import entities.Address;
 import entities.CityInfo;
 import entities.Hobby;
@@ -46,16 +47,17 @@ public class FacadeTest {
             em.createQuery("delete from Phone").executeUpdate();
 
 //            em.createQuery("delete from Person_Hobby").executeUpdate();
-
             Person p1 = new Person("Jens", "Henriksen", "jens@henriksen.dk");
             Person p2 = new Person("Morten", "Hansen", "morten@hansen.dk");
             Person p3 = new Person("Karsten", "Eriksen", "karsten@eriksen.dk");
 
-            p1.addHobby(new Hobby("Soccer"));
+            Hobby h1 = new Hobby("Soccer");
+
+            p1.addHobby(h1);
             p1.addHobby(new Hobby("Handball"));
             p2.addHobby(new Hobby("Surfing"));
             p2.addHobby(new Hobby("Golf"));
-            p3.addHobby(new Hobby("Kitesurfing"));
+            p3.addHobby(h1);
             p3.addHobby(new Hobby("Tennis"));
 
             Address a1 = new Address("Strandvejen 215");
@@ -87,7 +89,7 @@ public class FacadeTest {
     }
 
     @Test
-    public void testPersonsOnAddress() {
+    public void testGetPersonsByAddress() {
         Address a1 = new Address("Strandvejen 215");
         PersonsByAddressDTO res = facade.getPersonsByAddress(a1);
         assertEquals(2, res.getPersons().size());
@@ -95,9 +97,16 @@ public class FacadeTest {
 
     @Test
     public void testCityForAddress() {
-        Address a1 = new Address("Strandvejen 215");
+        Address a1 = new Address("Klampenborgvej 38");
         PersonsByAddressDTO res = facade.getPersonsByAddress(a1);
-        assertEquals("Vedbæk", res.getCity());
+        assertEquals("Lyngby", res.getCity());
+    }
+
+    @Test
+    public void testGetPersonsByHobby() {
+        Hobby hobby = new Hobby("Soccer");
+        PersonsByHobbyDTO res = facade.getPersonsByHobby(hobby);
+        assertEquals(2, res.getPersons().size());
     }
 
 }

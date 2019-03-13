@@ -26,4 +26,14 @@ public class PersonsByHobbyDTO {
         }
     }
 
+    public String getHobby() {
+        return hobby;
+    }
+
+    public List<SimplePersonDTO> getPersons() {
+        return persons;
+    }
+    
+    
+
 }
