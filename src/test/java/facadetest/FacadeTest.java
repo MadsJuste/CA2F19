@@ -145,12 +145,9 @@ public class FacadeTest {
     }
 
     @Test
-    public void testEditPersonByPhone() {
-
-    }
-
-    @Test
     public void testDeletePersonByPhone() {
-
+        facade.deletePersonByPhone(new Phone("75839204"));
+        PersonsByZipDTO res = facade.getPersonsByZip(new CityInfo("2800"));
+        assertEquals(0, res.getPersons().size());
     }
 }
