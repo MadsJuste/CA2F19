@@ -24,4 +24,14 @@ public class PersonByPhoneDTO {
         personDTO = new PersonDTO(person);
     }
 
+    public String getPhone() {
+        return phone;
+    }
+
+    public PersonDTO getPersonDTO() {
+        return personDTO;
+    }
+    
+    
+
 }

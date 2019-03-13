@@ -29,4 +29,14 @@ public class PersonsByZipDTO {
             }
         }
     }
+
+    public String getZip() {
+        return zip;
+    }
+
+    public List<SimplePersonWithAddressDTO> getPersons() {
+        return persons;
+    }
+    
+    
 }

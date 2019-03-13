@@ -38,4 +38,38 @@ public class PersonDTO {
             hobbies.add(new HobbyDTO(h));
         }
     }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public List<PhoneDTO> getPhones() {
+        return phones;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public String getZip() {
+        return zip;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public List<HobbyDTO> getHobbies() {
+        return hobbies;
+    }
+    
+    
 }

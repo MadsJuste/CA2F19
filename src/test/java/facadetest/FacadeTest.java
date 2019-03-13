@@ -5,8 +5,11 @@
  */
 package facadetest;
 
+import dto.CountByHobbyDTO;
+import dto.PersonByPhoneDTO;
 import dto.PersonsByAddressDTO;
 import dto.PersonsByHobbyDTO;
+import dto.PersonsByZipDTO;
 import entities.Address;
 import entities.CityInfo;
 import entities.Hobby;
@@ -90,22 +93,44 @@ public class FacadeTest {
 
     @Test
     public void testGetPersonsByAddress() {
-        Address a1 = new Address("Strandvejen 215");
-        PersonsByAddressDTO res = facade.getPersonsByAddress(a1);
+        PersonsByAddressDTO res = facade.getPersonsByAddress(new Address("Strandvejen 215"));
         assertEquals(2, res.getPersons().size());
     }
 
     @Test
     public void testCityForAddress() {
-        Address a1 = new Address("Klampenborgvej 38");
-        PersonsByAddressDTO res = facade.getPersonsByAddress(a1);
+        PersonsByAddressDTO res = facade.getPersonsByAddress(new Address("Klampenborgvej 38"));
         assertEquals("Lyngby", res.getCity());
+    }
+    
+    @Test
+    public void testGetPersonByPhone() {
+        PersonByPhoneDTO res = facade.getPersonByPhone(new Phone("75839204"));
+        assertEquals("Karsten", res.getPersonDTO().getFirstName());
     }
 
     @Test
     public void testGetPersonsByHobby() {
-        Hobby hobby = new Hobby("Soccer");
-        PersonsByHobbyDTO res = facade.getPersonsByHobby(hobby);
+        PersonsByHobbyDTO res = facade.getPersonsByHobby(new Hobby("Soccer"));
+        assertEquals(2, res.getPersons().size());
+    }
+    
+    @Test
+    public void testGetPersonsByZip() {
+        PersonsByZipDTO res = facade.getPersonsByZip(new CityInfo("2950"));
+        assertEquals(2, res.getPersons().size());
+    }
+    
+    @Test
+    public void testGetCountByHobby() {
+        CountByHobbyDTO res = facade.getCountByHobby(new Hobby("Soccer"));
+        assertEquals(2, res.getCount());
+    }
+    
+    @Test
+    public void testDeletePersonByPhone() {
+        facade.deletePersonByPhone(new Phone("28475739"));
+        PersonsByZipDTO res = facade.getPersonsByZip(new CityInfo("2950"));
         assertEquals(2, res.getPersons().size());
     }
 
