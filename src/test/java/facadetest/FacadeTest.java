@@ -138,7 +138,6 @@ public class FacadeTest {
 
     @Test
     public void testCreatePerson() {
-        
         Address a = new Address("Nørregaardsvej 25");
         a.setCityinfo(new CityInfo("3350"));
         Person p = new Person("Jens", "Mikkelsen", a);
