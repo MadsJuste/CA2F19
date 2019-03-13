@@ -15,16 +15,15 @@ import java.util.List;
  * @author mwn
  */
 public class PersonsByHobbyDTO {
-    
+
     private String hobby;
     private List<SimplePersonDTO> persons = new ArrayList();
 
     public PersonsByHobbyDTO(Hobby h) {
         this.hobby = h.getName();
-        for (Person p : h.getPersonCollection()) {
+        for (Person p : h.getPersons()) {
             persons.add(new SimplePersonDTO(p));
         }
     }
-    
-    
+
 }

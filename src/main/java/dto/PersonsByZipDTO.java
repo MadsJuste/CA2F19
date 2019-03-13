@@ -5,6 +5,8 @@
  */
 package dto;
 
+import entities.Address;
+import entities.CityInfo;
 import entities.Person;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,16 +16,17 @@ import java.util.List;
  * @author mwn
  */
 public class PersonsByZipDTO {
-    
+
     private String zip;
     private List<SimplePersonWithAddressDTO> persons = new ArrayList();
 
-    public PersonsByZipDTO(String zip, List<Person> p) {
+    public PersonsByZipDTO(CityInfo cityinfo) {
 
-        this.zip = zip;
-        for (Person person : p) {
-            persons.add(new SimplePersonWithAddressDTO(person));
+        this.zip = cityinfo.getZip();
+        for (Address add : cityinfo.getAddresses()) {
+            for (Person person : add.getPersons()) {
+                persons.add(new SimplePersonWithAddressDTO(person));
+            }
         }
     }
-    
 }

@@ -20,9 +20,9 @@ public class SimplePersonDTO {
     private List<PhoneDTO> phones = new ArrayList();
 
     public SimplePersonDTO(Person p) {
-        this.firstName = p.getFirstname();
-        this.lastName = p.getLastname();
-        for (Phone phone : p.getPhoneCollection()) {
+        this.firstName = p.getFirstName();
+        this.lastName = p.getLastName();
+        for (Phone phone : p.getPhones()) {
             phones.add(new PhoneDTO(phone));
         }
     }
