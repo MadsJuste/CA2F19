@@ -27,6 +27,24 @@ public class PersonsByAddressDTO {
             persons.add(new SimplePersonDTO(p));
         }
     }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public String getZip() {
+        return zip;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public List<SimplePersonDTO> getPersons() {
+        return persons;
+    }
+    
+    
     
     
 }
