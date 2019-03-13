@@ -1,5 +1,6 @@
 package facade;
 
+import dto.AllCitiesAndAllZipCodesDTO;
 import dto.CountByHobbyDTO;
 import dto.PersonByPhoneDTO;
 import dto.PersonDTO;
@@ -84,7 +85,7 @@ public class Facade implements IFacade {
         EntityManager em = emf.createEntityManager();
         try {
             Query query = em.createQuery(
-                    "SELECT NEW dto.PersensByZipDTO(a) FROM CityInfo AS a WHERE a.zip = :zip",
+                    "SELECT NEW dto.PersonsByZipDTO(a) FROM CityInfo AS a WHERE a.zip = :zip",
                      PersonsByZipDTO.class)
                     .setParameter("zip", cityinfo.getZip());
 
@@ -111,16 +112,34 @@ public class Facade implements IFacade {
     }
 
     /*
-    @Override
-    public ZipCodesDTO getZipCodes() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
      */
+    @Override
+    public AllCitiesAndAllZipCodesDTO getZipCodes() {
+        /*
+        EntityManager em = emf.createEntityManager();
+        try {
+        Query query = em.createQuery("SELECT a ")
+        } finally {
+        em.close();
+        }*/
+        
+        throw new UnsupportedOperationException("not supported yet");
+    }
+
     @Override
     public PersonDTO createPerson(Person person) {
         EntityManager em = emf.createEntityManager();
         try {
-            Query query = em.createQuery("SELECT NEW dto.PersonDTO(a) FROM ", PersonDTO.class).setParameter("", em);
+            em.getTransaction().begin();
+            em.persist(person);
+            em.getTransaction().commit();
+            
+            Query query = em.createQuery(
+            "SELECT NEW dto.PersonDTO(a) FROM Person AS a WHERE a.email = :email"
+            ,PersonDTO.class)
+            .setParameter("email", person.getEmail());
+            
+            return (PersonDTO) query.getSingleResult();
         } finally {
             em.close();
         }
@@ -129,13 +148,29 @@ public class Facade implements IFacade {
 
     @Override
     public PersonDTO editPersonByPhone(Person person) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        EntityManager em = emf.createEntityManager();
+        try {
+            em.getTransaction().begin();
+            em.merge(person);
+            em.getTransaction().commit();
+            
+            Query query = em.createQuery(
+            "SELECT NEW dto.PersonDTO(a) FROM Person AS a WHERE a.email = :email"
+            ,PersonDTO.class)
+            .setParameter("email", person.getEmail());
+            
+            return (PersonDTO) query.getSingleResult();
+        } finally {
+            em.close();
+        }
+
     }
 
     @Override
     public PersonDTO deletePersonByPhone(Phone phone) {
         EntityManager em = emf.createEntityManager();
         try {
+            
             Query query2 = em.createQuery(
             "SELECT a FROM Person a WHERE a.phones.number = :number"
             ,PersonDTO.class)

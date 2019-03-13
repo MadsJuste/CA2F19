@@ -1,5 +1,6 @@
 package facade;
 
+import dto.AllCitiesAndAllZipCodesDTO;
 import dto.CountByHobbyDTO;
 import dto.PersonByPhoneDTO;
 import dto.PersonDTO;
@@ -33,10 +34,10 @@ public interface IFacade {
 
     //getCountByHobby() : GET api/person/count/{hobby}
     public CountByHobbyDTO getCountByHobby(Hobby hobby);
-/*
 
     //getZipCodes() : GET api/zip/
-    public ZipCodesDTO getZipCodes();
+    public AllCitiesAndAllZipCodesDTO getZipCodes();
+/*
 */
 
     //POST
