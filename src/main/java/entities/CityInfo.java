@@ -38,6 +38,10 @@ public class CityInfo implements Serializable {
     public CityInfo() {
     }
 
+    public CityInfo(String zip, String city) {
+        this.zip = zip;
+        this.city = city;
+    }
     
     public void setId(Integer id) {
         this.id = id;
