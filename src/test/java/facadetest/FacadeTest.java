@@ -78,10 +78,19 @@ public class FacadeTest {
             Phone phone2 = new Phone("58373895");
             Phone phone3 = new Phone("75839204");
 
+<<<<<<< HEAD
             p1.addPhones(phone1);
             p2.addPhones(phone2);
             p3.addPhones(phone3);
             
+=======
+            phone1.setPerson(p1);
+            phone2.setPerson(p2);
+            phone3.setPerson(p3);
+            
+        //    p3.addPhone(phone3);
+
+>>>>>>> 0a6bd7f1384ccf00dd0beb2c3344146a88725fad
             em.persist(p1);
             em.persist(p2);
             em.persist(p3);
