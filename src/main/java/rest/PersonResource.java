@@ -86,8 +86,8 @@ public class PersonResource {
     @PUT
     @Path("{phone}")
     @Consumes(MediaType.APPLICATION_JSON)
-    public void editPersonByPhone(String phone) {
-        Person p = gson.fromJson(@PathParam("phone"), Person.class);
+    public void editPersonByPhone(@PathParam("phone") String phone) {
+        Person p = gson.fromJson(phone, Person.class);
         return Response.ok().entity(gson.toJson(f.editPersonByPhone(p))).build();
         
     }
@@ -96,15 +96,14 @@ public class PersonResource {
     @Path("delete/{phone}")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response deletePersonByPhone(@PathParam("phone") String phone) {
-        Person p = gson.fromJson(@PathParam("phone"), Person.class);
+        Person p = gson.fromJson(phone, Person.class);
         return Response.ok().entity(gson.toJson(f.deletePersonByPhone(p))).build();
     }
     
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response addPerson(String content) {
-        
-        f.addPerson(JSONConverter.getPersonFromJson(content));
-        return Response.ok().build();
+        Person p = gson.fromJson(content, Person.class);
+        return Response.ok().entity(gson.toJson(f.createPerson(p))).build();
     }
 }
