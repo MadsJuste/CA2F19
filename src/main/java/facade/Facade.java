@@ -134,7 +134,7 @@ public class Facade implements IFacade {
 
             Query query = em.createQuery(
                     "SELECT NEW dto.PersonDTO(a) FROM Person AS a WHERE a.email = :email",
-                     PersonDTO.class)
+                    PersonDTO.class)
                     .setParameter("email", person.getEmail());
 
             return (PersonDTO) query.getSingleResult();
@@ -154,7 +154,7 @@ public class Facade implements IFacade {
 
             Query query = em.createQuery(
                     "SELECT NEW dto.PersonDTO(a) FROM Person AS a WHERE a.email = :email",
-                     PersonDTO.class)
+                    PersonDTO.class)
                     .setParameter("email", person.getEmail());
 
             return (PersonDTO) query.getSingleResult();
@@ -171,12 +171,12 @@ public class Facade implements IFacade {
 
             Query query2 = em.createQuery(
                     "SELECT a FROM Person a WHERE a.phones.number = :number",
-                     PersonDTO.class)
+                    PersonDTO.class)
                     .setParameter("number", phone.getNumber());
 
             Query query1 = em.createQuery(
                     "SELECT NEW dto.PersonDTO(a) FROM Person AS a WHERE a.phones.number = :number",
-                     PersonDTO.class)
+                    PersonDTO.class)
                     .setParameter("number", phone.getNumber());
 
             Person person = (Person) query2.getSingleResult();
