@@ -136,11 +136,13 @@ public class FacadeTest {
 
     @Test
     public void testCreatePerson() {
+        PersonsByZipDTO res = facade.getPersonsByZip(new CityInfo("2800"));
+        assertEquals(2, res.getPersons().size());
         Address a = new Address("Nørregaardsvej 25");
         a.setCityinfo(new CityInfo("2800"));
         Person p = new Person("Jens", "Mikkelsen", a);
         facade.createPerson(p);
-        PersonsByZipDTO res = facade.getPersonsByZip(new CityInfo("2800"));
+        res = facade.getPersonsByZip(new CityInfo("2800"));
         assertEquals(3, res.getPersons().size());
     }
 
