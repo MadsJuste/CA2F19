@@ -165,12 +165,11 @@ public class Facade implements IFacade {
         try {
 
             Query query2 = em.createQuery(
-                    "SELECT a FROM Person a WHERE a.phones.number = :number",
-                    PersonDTO.class)
-                    .setParameter("number", phone.getNumber());
-
+            "SELECT p FROM Person p JOIN p.phones ph WHERE ph.number = :number");
+            query2.setParameter("number", phone.getNumber());
+            
             Query query1 = em.createQuery(
-                    "SELECT NEW dto.PersonDTO(a) FROM Person AS a WHERE a.phones.number = :number",
+            "SELECT NEW dto.PersonDTO(a) FROM Person a JOIN a.phones pho WHERE pho.number = :number",
                     PersonDTO.class)
                     .setParameter("number", phone.getNumber());
 

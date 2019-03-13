@@ -109,7 +109,6 @@ public class Person implements Serializable {
         if(phone.getPerson()==null) {
             phone.setPerson(this);
         }
-        
 
     }
 
