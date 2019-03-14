@@ -34,20 +34,21 @@ import javax.ws.rs.core.Response;
 
 @Path("person")
 public class PersonResource {
+    Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
     @Context
     private UriInfo context;
-    Gson gson = new GsonBuilder().setPrettyPrinting().create();
+    
     Facade f = new Facade(Persistence.createEntityManagerFactory("PU"));
 
     public PersonResource() {
     }
 
     @GET
-    @Path("{street}")
+    @Path("/street/{street}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getPersonsByAddress(@PathParam("street") String street) throws AddressNotFoundException {
-        Address address = gson.fromJson(street, Address.class);
+        Address address = new Address(street);
         if (address == null) {
             return Response.status(404)
                     .entity(gson.toJson(new AddressNotFoundException("no Address found")))
@@ -58,10 +59,10 @@ public class PersonResource {
     }
 
     @GET
-    @Path("{phone}")
+    @Path("/{phone}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getPersonByPhone(@PathParam("phone") String phone) throws PhoneNotFoundException {
-        Phone p = gson.fromJson(phone, Phone.class);
+        Phone p = new Phone(phone);
         if (p == null) {
             return Response.status(404)
                     .entity(gson.toJson(new PhoneNotFoundException("Phone number unknown")))
@@ -72,10 +73,10 @@ public class PersonResource {
     }
 
     @GET
-    @Path("{hobby}")
+    @Path("/hobby/{hobby}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getPersonsByHobby(@PathParam("hobby") String hobby) throws HobbyNotFoundException {
-        Hobby h = gson.fromJson(hobby, Hobby.class);
+        Hobby h = new Hobby(hobby);
         if (h == null) {
             return Response.status(404)
                     .entity(gson.toJson(new HobbyNotFoundException("Hobby unknown")))
@@ -86,10 +87,10 @@ public class PersonResource {
     }
 
     @GET
-    @Path("{zip}")
+    @Path("/zip/{zip}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getPersonsByZip(@PathParam("zip") String zip) throws ZipNotFoundException {
-        CityInfo ci = gson.fromJson(zip, CityInfo.class);
+        CityInfo ci = new CityInfo(zip);
         if (ci == null) {
             return Response.status(404)
                     .entity(gson.toJson(new ZipNotFoundException("ZIP unknown")))
@@ -103,7 +104,7 @@ public class PersonResource {
     @Path("count/{hobby}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getCountByHobby(@PathParam("hobby") String hobby) throws HobbyNotFoundException {
-        Hobby h = gson.fromJson(hobby, Hobby.class);
+        Hobby h = new Hobby(hobby);
         if (h == null) {
             return Response.status(404)
                     .entity(gson.toJson(new HobbyNotFoundException("Hobby unknown")))
@@ -113,11 +114,13 @@ public class PersonResource {
         return Response.ok().entity(gson.toJson(f.getCountByHobby(h))).build();
     }
 
+    
+        //DENNE SKAL JEG KIGGE PÅ!
     @PUT
-    @Path("{phone}")
+    @Path("/phone/{phone}")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response editPersonByPhone(@PathParam("phone") String phone) throws PhoneNotFoundException {
-        Person p = gson.fromJson(phone, Person.class);
+    public Response editPersonByPhone(String content) throws PhoneNotFoundException {
+        Person p = gson.fromJson(content, Person.class);
         if (p == null) {
             return Response.status(404)
                     .entity(gson.toJson(new PhoneNotFoundException("Phone number unknown")))
@@ -132,7 +135,7 @@ public class PersonResource {
     @Path("delete/{phone}")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response deletePersonByPhone(@PathParam("phone") String phone) throws PhoneNotFoundException {
-        Phone p = gson.fromJson(phone, Phone.class);
+        Phone p = new Phone(phone);
         if (p == null) {
             return Response.status(404)
                     .entity(gson.toJson(new PhoneNotFoundException("Phone number unknown")))
@@ -141,7 +144,7 @@ public class PersonResource {
         }
         return Response.ok().entity(gson.toJson(f.deletePersonByPhone(p))).build();
     }
-
+    // og denne her =? 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response addPerson(String content) throws PersonFailedException {
