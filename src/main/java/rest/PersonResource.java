@@ -118,7 +118,7 @@ public class PersonResource {
     }
 
     
-        //DENNE SKAL JEG KIGGE PÅ!
+        //THIS IS UNRELENTING GARBAGE!
     @PUT
     @Path("/phone/{phone}")
     @Consumes(MediaType.APPLICATION_JSON)

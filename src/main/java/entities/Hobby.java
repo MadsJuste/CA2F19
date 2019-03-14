@@ -26,7 +26,7 @@ public class Hobby implements Serializable {
     private List<Person> persons = new ArrayList();
     
     private String description;
-    
+    @Column(unique=true)
     private String name;
 
     public Hobby() {
