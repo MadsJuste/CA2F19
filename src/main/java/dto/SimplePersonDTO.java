@@ -27,4 +27,18 @@ public class SimplePersonDTO {
         }
     }
 
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public List<PhoneDTO> getPhones() {
+        return phones;
+    }
+    
+    
+
 }

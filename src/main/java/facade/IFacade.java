@@ -7,6 +7,7 @@ import dto.PersonDTO;
 import dto.PersonsByAddressDTO;
 import dto.PersonsByHobbyDTO;
 import dto.PersonsByZipDTO;
+import dto.SimplePersonDTO;
 import entities.Address;
 import entities.CityInfo;
 import entities.Hobby;
@@ -50,6 +51,8 @@ public interface IFacade {
 
     //DELETE
     //deletePersonByPhone() : DELETE api/person/{phone}
-    public PersonDTO deletePersonByPhone(Phone phone); 
+    public SimplePersonDTO deletePersonByPhone(Phone phone); 
+    
+    public CityInfo zipAssister(CityInfo cityinfo);
     
 }

@@ -7,6 +7,7 @@ import dto.PersonDTO;
 import dto.PersonsByAddressDTO;
 import dto.PersonsByHobbyDTO;
 import dto.PersonsByZipDTO;
+import dto.SimplePersonDTO;
 import entities.Address;
 import entities.CityInfo;
 import entities.Hobby;
@@ -87,9 +88,9 @@ public class Facade implements IFacade {
             Query query = em.createQuery(
                     "SELECT NEW dto.PersonsByZipDTO(a) FROM CityInfo AS a WHERE a.zip = :zip",
                     PersonsByZipDTO.class)
-                    .setParameter("zip", cityinfo.getZip());
-
-            return (PersonsByZipDTO) query.getSingleResult();
+                    .setParameter("zip", cityinfo.getZip()).setMaxResults(1);
+            PersonsByZipDTO pbzDTO = (PersonsByZipDTO) query.getSingleResult();
+            return pbzDTO;
         } finally {
             em.close();
         }
@@ -128,6 +129,13 @@ public class Facade implements IFacade {
     public PersonDTO createPerson(Person person) {
         EntityManager em = emf.createEntityManager();
         try {
+            /*
+            CityInfo ci = zipAssister(person.getAddress().getCityinfo());
+            System.out.println(ci.getZip() + " " + ci.getId());
+            if (ci != null) {
+            person.getAddress().getCityinfo().setId(ci.getId());
+            }
+            */
             em.getTransaction().begin();
             em.persist(person);
             em.getTransaction().commit();
@@ -160,30 +168,41 @@ public class Facade implements IFacade {
     }
 
     @Override
-    public PersonDTO deletePersonByPhone(Phone phone) {
+    public SimplePersonDTO deletePersonByPhone(Phone phone) {
         EntityManager em = emf.createEntityManager();
+        Person person = null;
         try {
-
-            Query query2 = em.createQuery(
-            "SELECT p FROM Person p JOIN p.phones ph WHERE ph.number = :number");
-            query2.setParameter("number", phone.getNumber());
-            
-            Query query1 = em.createQuery(
-            "SELECT NEW dto.PersonDTO(a) FROM Person a JOIN a.phones pho WHERE pho.number = :number",
-                    PersonDTO.class)
-                    .setParameter("number", phone.getNumber());
-
-            Person person = (Person) query2.getSingleResult();
-            PersonDTO pDTO = (PersonDTO) query1.getSingleResult();
-
             em.getTransaction().begin();
+            Query query2 = em.createQuery(
+                    "SELECT p FROM Person p JOIN p.phones ph WHERE ph.number = :number");
+            query2.setParameter("number", phone.getNumber());
+
+            person = (Person) query2.getSingleResult();
+
+            SimplePersonDTO pDTO = new SimplePersonDTO(person);
+
             em.remove(person);
             em.getTransaction().commit();
-
             return pDTO;
+
         } finally {
+
             em.close();
         }
     }
 
+    @Override
+    public CityInfo zipAssister(CityInfo cityinfo) {
+        EntityManager em = emf.createEntityManager();
+        try {
+            Query query = em.createQuery(
+                    "SELECT a FROM CityInfo a WHERE a.zip = :zip")
+                    .setParameter("zip", cityinfo.getZip());
+            
+                
+            return (CityInfo) query.getSingleResult();
+        } finally {
+            em.close();
+        }
+    }
 }

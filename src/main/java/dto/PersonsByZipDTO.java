@@ -23,6 +23,11 @@ public class PersonsByZipDTO {
     public PersonsByZipDTO(CityInfo cityinfo) {
 
         this.zip = cityinfo.getZip();
+        List<Person> test = cityinfo.getAddresses().get(0).getPersons();
+        for (Person p : test) {
+            
+        }
+        
         for (Address add : cityinfo.getAddresses()) {
             for (Person person : add.getPersons()) {
                 persons.add(new SimplePersonWithAddressDTO(person));
