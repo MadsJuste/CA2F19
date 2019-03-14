@@ -13,6 +13,6 @@ import javax.persistence.Persistence;
  */
 public class schemaBuilder {
     public static void main (String args[]){
-        Persistence.generateSchema("PU", null);
+        Persistence.generateSchema("pu", null);
     }
 }

@@ -7,6 +7,7 @@ package rest;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import dto.PersonDTO;
 import entities.Address;
 import entities.CityInfo;
 import entities.Hobby;
@@ -18,6 +19,8 @@ import exceptions.PersonFailedException;
 import exceptions.PhoneNotFoundException;
 import exceptions.ZipNotFoundException;
 import facade.Facade;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Persistence;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
@@ -39,7 +42,7 @@ public class PersonResource {
     @Context
     private UriInfo context;
     
-    Facade f = new Facade(Persistence.createEntityManagerFactory("PU"));
+    Facade f = new Facade(Persistence.createEntityManagerFactory("pu"));
 
     public PersonResource() {
     }
@@ -119,15 +122,26 @@ public class PersonResource {
     @PUT
     @Path("/phone/{phone}")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response editPersonByPhone(String content) throws PhoneNotFoundException {
-        Person p = gson.fromJson(content, Person.class);
-        if (p == null) {
-            return Response.status(404)
-                    .entity(gson.toJson(new PhoneNotFoundException("Phone number unknown")))
-                    .type(MediaType.APPLICATION_JSON).
-                    build();
+    public Response editPersonByPhone(String content, @PathParam("phone") String phone) throws PhoneNotFoundException {
+        PersonDTO p = gson.fromJson(content, PersonDTO.class);
+        Address address = new Address(p.getStreet());
+        CityInfo ci = new CityInfo(p.getZip(),p.getCity());
+        List<Hobby> hobbies = new ArrayList();
+        for(int i = 0; p.getHobbies().size() > i; i++){
+            hobbies.add(new Hobby(p.getHobbies().get(i).getName()));
         }
-        return Response.ok().entity(gson.toJson(f.editPersonByPhone(p))).build();
+        List<Phone> phones = new ArrayList();
+        /*for(int i = 0; p.getPhones().size() < i; i++){
+            phones.add(new Phone(p.getPhones().get(i).getNumber()));
+        }
+        */
+         address.setCityinfo(ci);
+        
+        Person person = new Person(p.getFirstName(),p.getLastName(),p.getEmail(), address ,phones , hobbies);        
+
+        PersonDTO pDTO = f.editPersonByPhone(person, phone);
+        
+        return Response.ok().entity(gson.toJson(pDTO)).build();
 
     }
 
@@ -148,13 +162,29 @@ public class PersonResource {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response addPerson(String content) throws PersonFailedException {
-        Person p = gson.fromJson(content, Person.class);
+        PersonDTO p = gson.fromJson(content, PersonDTO.class);
+        Address address = new Address(p.getStreet());
+        CityInfo ci = new CityInfo(p.getZip(),p.getCity());
+        List<Hobby> hobbies = new ArrayList();
+        for(int i = 0; p.getHobbies().size() > i; i++){
+            hobbies.add(new Hobby(p.getHobbies().get(i).getName()));
+        }
+        
+        List<Phone> phones = new ArrayList();
+        /*for(int i = 0; p.getPhones().size() < i; i++){
+            phones.add(new Phone(p.getPhones().get(i).getNumber()));
+        }*/
+        
+         address.setCityinfo(ci);
+        
+        Person person = new Person(p.getFirstName(),p.getLastName(),p.getEmail(), address ,phones , hobbies);        
+
         if (p == null) {
             return Response.status(404)
                     .entity(gson.toJson(new PersonFailedException("Content for creating person is incorrect")))
                     .type(MediaType.APPLICATION_JSON).
                     build();
         }
-        return Response.ok().entity(gson.toJson(f.createPerson(p))).build();
+        return Response.ok().entity(gson.toJson(f.createPerson(person))).build();
     }
 }

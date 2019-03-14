@@ -32,7 +32,7 @@ import static org.junit.Assert.*;
  */
 public class FacadeTest {
 
-    EntityManagerFactory emf = Persistence.createEntityManagerFactory("pu", null);
+    EntityManagerFactory emf = Persistence.createEntityManagerFactory("pu-test", null);
 
     Facade facade = new Facade(emf);
 
@@ -92,7 +92,7 @@ public class FacadeTest {
         }
 
     }
-/*
+    /*
     @Test
     public void testGetPersonsByAddress() {
         PersonsByAddressDTO res = facade.getPersonsByAddress(new Address("Strandvejen 215"));
@@ -163,13 +163,13 @@ public class FacadeTest {
         
             Hobby h = new Hobby("mtg");
             person.addHobby(h);
-            Address a = new Address("Strandvejen 215");
+            Address a = new Address("sere");
             a.setCityinfo(new CityInfo("2950", "Vedbæk"));
             person.setAddress(a);
             Phone phone = new Phone("75839204");
             person.addPhones(phone);
         
-        PersonDTO res = facade.editPersonByPhone(person);
-        assertEquals("mads", res.getFirstName());
+        PersonDTO res = facade.editPersonByPhone(person,"28475739" );
+        assertEquals("sere", res.getStreet());
     }*/
 }

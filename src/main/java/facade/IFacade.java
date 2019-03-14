@@ -47,7 +47,7 @@ public interface IFacade {
     
     //PUT
     //editPersonByPhone() : PUT api/person/{phone}
-    public PersonDTO editPersonByPhone(Person person);
+    public PersonDTO editPersonByPhone(Person person, String number);
 
     //DELETE
     //deletePersonByPhone() : DELETE api/person/{phone}

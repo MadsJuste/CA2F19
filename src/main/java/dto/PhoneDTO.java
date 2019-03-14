@@ -19,6 +19,22 @@ public class PhoneDTO {
         this.number = p.getNumber();
         this.description = p.getDescription();
     }
+
+    public String getNumber() {
+        return number;
+    }
+
+    public void setNumber(String number) {
+        this.number = number;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
     
     
 }

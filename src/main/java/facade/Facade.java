@@ -148,17 +148,24 @@ public class Facade implements IFacade {
     }
 
     @Override
-    public PersonDTO editPersonByPhone(Person person) {
+    public PersonDTO editPersonByPhone(Person person, String number) {
         EntityManager em = emf.createEntityManager();
         try {
             em.getTransaction().begin();
+             
+            Query query2 = em.createQuery(
+                    "SELECT p FROM Person p JOIN p.phones ph WHERE ph.number = :number");
+            query2.setParameter("number", number);
+            Person temp = (Person) query2.getSingleResult();
+            person.setId(temp.getId());
+            
             em.merge(person);
             em.getTransaction().commit();
 
             Query query = em.createQuery(
-                    "SELECT NEW dto.PersonDTO(a) FROM Person AS a WHERE a.email = :email",
+                    "SELECT NEW dto.PersonDTO(a) FROM Person AS a WHERE a.id = :id",
                     PersonDTO.class)
-                    .setParameter("email", person.getEmail());
+                    .setParameter("id", person.getId());
 
             return (PersonDTO) query.getSingleResult();
         } finally {
