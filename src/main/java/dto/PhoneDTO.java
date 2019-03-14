@@ -17,7 +17,7 @@ public class PhoneDTO {
 
     public PhoneDTO(Phone p) {
         this.number = p.getNumber();
-        this.description = p.getNumber();
+        this.description = p.getDescription();
     }
     
     
