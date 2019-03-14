@@ -13,6 +13,7 @@ import entities.CityInfo;
 import entities.Hobby;
 import entities.Person;
 import entities.Phone;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -125,26 +126,76 @@ public class Facade implements IFacade {
         }
     }
 
+    public SimplePersonDTO createPersonSimplified(Person p) {
+        EntityManager em = emf.createEntityManager();
+        try {
+            em.getTransaction().begin();
+            em.persist(p);
+            em.getTransaction().commit();
+        } finally {
+            em.close();
+        }
+        return new SimplePersonDTO(p);
+    }
+
     @Override
     public PersonDTO createPerson(Person person) {
         EntityManager em = emf.createEntityManager();
         try {
-            /*
-            CityInfo ci = zipAssister(person.getAddress().getCityinfo());
-            System.out.println(ci.getZip() + " " + ci.getId());
-            if (ci != null) {
-            person.getAddress().getCityinfo().setId(ci.getId());
+            System.out.println("begin transaction");
+            CityInfo cityinfo = person.getAddress().getCityinfo();
+            List<Hobby> hobbies = person.getHobbies();
+            CityInfo setCity = (CityInfo) em.createQuery("SELECT a FROM CityInfo a WHERE a.zip = :zip").setParameter("zip", cityinfo.getZip()).getSingleResult();
+            if (setCity != null) {
+                person.getAddress().setCityinfo(setCity);
             }
-            */
+            System.out.println("after setcity transaction");
+            List<Hobby> hobbiesreturn = new ArrayList();
+            for (Hobby hob : hobbies) {
+                Hobby setHobby = (Hobby) em.createQuery("SELECT a FROM Hobby a WHERE a.name = :name").setParameter("name", hob.getName()).getSingleResult();
+                if (setHobby != null) {
+                    hobbiesreturn.add(setHobby);
+                } else {
+                    hobbiesreturn.add(hob);
+                }
+            }
+            System.out.println("after hobby loop");
+            person.setHobbies(hobbiesreturn);
             em.getTransaction().begin();
             em.persist(person);
             em.getTransaction().commit();
-
+            System.out.println("returning personDTO\n" + person.getFirstName() + "\n: " + person.getAddress().getStreet() + "\n"
+                    + person.getEmail() + "\n" + person.getAddress().getCityinfo().getZip() + "\n");
             return new PersonDTO(person);
+        } catch (Exception ex) {
+            System.out.println("begin transaction catch");
+            /*
+            CityInfo cityinfo = person.getAddress().getCityinfo();
+            List<Hobby> hobbies = person.getHobbies();
+            CityInfo setCity = (CityInfo) em.createQuery("SELECT a FROM CityInfo a WHERE a.zip = :zip").setParameter("zip", cityinfo.getZip());
+            if (setCity != null) {
+                person.getAddress().setCityinfo(setCity);
+            }
+            System.out.println("after setcity transaction");
+            List<Hobby> hobbiesreturn = new ArrayList();
+            for (Hobby hob : hobbies) {
+                Hobby setHobby = (Hobby) em.createQuery("SELECT a FROM Hobby a WHERE a.name = :name").setParameter("name", hob.getName());
+                if (setHobby != null) {
+                    hobbiesreturn.add(setHobby);
+                } else {
+                    hobbiesreturn.add(hob);
+                }
+            }
+            person.setHobbies(hobbiesreturn);
+            System.out.println("pre transaction catch");
+            em.getTransaction().begin();
+            em.persist(person);
+            em.getTransaction().commit();
+             */
         } finally {
             em.close();
         }
-
+        return new PersonDTO(person);
     }
 
     @Override
@@ -205,11 +256,11 @@ public class Facade implements IFacade {
             Query query = em.createQuery(
                     "SELECT a FROM CityInfo a WHERE a.zip = :zip")
                     .setParameter("zip", cityinfo.getZip());
-            
-                
+
             return (CityInfo) query.getSingleResult();
         } finally {
             em.close();
         }
     }
+
 }
