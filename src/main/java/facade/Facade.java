@@ -145,6 +145,7 @@ public class Facade implements IFacade {
 
             em.getTransaction().begin();
 
+
             person = testIfZipOrHobbyExist(person);
            
 
