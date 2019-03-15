@@ -29,7 +29,7 @@ public class SQLGenerator {
         StringBuilder sb = new StringBuilder();
 
         for (int i = 0; i < amount; i++) {
-            sb.append("INSERT INTO `CA2`.`Address` (`Street`, `additionalinfo`, `Cityinfo_id`) VALUES ('")
+            sb.append("INSERT INTO `ca2`.`ADDRESS` (`Street`, `additionalinfo`, `Cityinfo_id`) VALUES ('")
                     .append(addresses[getNumber(0, addresses.length - 1)])
                     .append(" ")
                     .append(getNumber(1, 450))
@@ -47,7 +47,7 @@ public class SQLGenerator {
         String firstName = null;
         for (int i = 0; i < amount; i++) {
             firstName = firstNames[getNumber(0, firstNames.length - 1)];
-            sb.append("INSERT INTO `CA2`.`Person` (`email`, `firstname`, `lastname`, `Address_ID`) VALUES ('")
+            sb.append("INSERT INTO `ca2`.`PERSON` (`email`, `firstname`, `lastname`, `Address_ID`) VALUES ('")
                     .append(firstName.toLowerCase())
                     .append("@")
                     .append(mails[getNumber(0, mails.length - 1)])
@@ -68,7 +68,7 @@ public class SQLGenerator {
         StringBuilder sb = new StringBuilder();
 
         for (int i = 0; i < amount; i++) {
-            sb.append("INSERT INTO `CA2`.`phone` (`number`, `description`, `Person_ID`) VALUES ('")
+            sb.append("INSERT INTO `ca2`.`PHONE` (`number`, `description`, `Person_ID`) VALUES ('")
                     .append(getNumber(12345678, 99999999))
                     .append("', '")
                     .append(phoneDesc[getNumber(0, phoneDesc.length - 1)])
@@ -85,7 +85,7 @@ public class SQLGenerator {
         StringBuilder sb = new StringBuilder();
 
         for (int i = 0; i < hobbies.length; i++) {
-            sb.append("INSERT INTO `CA2`.`Hobby` (`name`, `description`) VALUES ('")
+            sb.append("INSERT INTO `ca2`.`HOBBY` (`name`, `description`) VALUES ('")
                     .append(hobbies[i])
                     .append("', '")
                     .append("Test")
@@ -99,7 +99,7 @@ public class SQLGenerator {
         StringBuilder sb = new StringBuilder();
 
         for (int i = 0; i < amount; i++) {
-            sb.append("INSERT INTO `CA2`.`person_hobby` (`hobbies_id`, `Persons_ID`) VALUES ('")
+            sb.append("INSERT INTO `ca2`.`PERSON-HOBBY` (`hobbies_id`, `Persons_ID`) VALUES ('")
                     .append(getNumber(1, hobbies.length))
                     .append("', '")
                     .append(getNumber(1, amount))
