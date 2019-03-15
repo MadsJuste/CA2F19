@@ -11,20 +11,12 @@ package exceptions;
  */
 public class AddressNotFoundException extends Exception {
 
-    /**
-     * Creates a new instance of <code>CustomerNotFoundException</code> without
-     * detail message.
-     */
-    public AddressNotFoundException() {
-    }
+     public AddressNotFoundException(String msg) {
+        super(msg);
+    } 
+    
+   
 
-    /**
-     * Constructs an instance of <code>CustomerNotFoundException</code> with the
-     * specified detail message.
-     *
-     * @param msg the detail message.
-     */
-    public AddressNotFoundException(String msg) {
-       
+    public AddressNotFoundException() {
     }
 }

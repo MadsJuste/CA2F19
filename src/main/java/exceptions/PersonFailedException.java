@@ -11,20 +11,10 @@ package exceptions;
  */
 public class PersonFailedException extends Exception {
 
-    /**
-     * Creates a new instance of <code>CustomerNotFoundException</code> without
-     * detail message.
-     */
-    public PersonFailedException() {
+    public PersonFailedException(String msg) {
+        super(msg);
     }
 
-    /**
-     * Constructs an instance of <code>CustomerNotFoundException</code> with the
-     * specified detail message.
-     *
-     * @param msg the detail message.
-     */
-    public PersonFailedException(String msg) {
-       
+    public PersonFailedException() {
     }
 }

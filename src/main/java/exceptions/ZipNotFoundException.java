@@ -11,20 +11,10 @@ package exceptions;
  */
 public class ZipNotFoundException extends Exception {
 
-    /**
-     * Creates a new instance of <code>CustomerNotFoundException</code> without
-     * detail message.
-     */
-    public ZipNotFoundException() {
+    public ZipNotFoundException(String msg) {
+        super(msg);
     }
 
-    /**
-     * Constructs an instance of <code>CustomerNotFoundException</code> with the
-     * specified detail message.
-     *
-     * @param msg the detail message.
-     */
-    public ZipNotFoundException(String msg) {
-       
+    public ZipNotFoundException() {
     }
 }
