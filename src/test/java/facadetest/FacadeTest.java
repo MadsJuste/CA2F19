@@ -91,7 +91,7 @@ public class FacadeTest {
 
     }
 
-    /*
+    
 
     @Test
     public void testGetPersonsByAddress() {
@@ -176,6 +176,6 @@ public class FacadeTest {
         
         PersonDTO res = facade.editPersonByPhone(person,"28475739" );
         assertEquals("sere", res.getStreet());
-    }*/
+    }
 
 }
