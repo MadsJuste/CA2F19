@@ -142,14 +142,16 @@ public class Facade implements IFacade {
     public PersonDTO createPerson(Person person) {
         EntityManager em = emf.createEntityManager();
         try {
-     
+
             em.getTransaction().begin();
+
             person = testIfZipOrHobbyExist(person);
            
+
             em.persist(person);
-     
+
             em.getTransaction().commit();
-             
+
         } finally {
             em.close();
         }
@@ -161,14 +163,15 @@ public class Facade implements IFacade {
         EntityManager em = emf.createEntityManager();
         try {
             em.getTransaction().begin();
-             
+
             Query query2 = em.createQuery(
                     "SELECT p FROM Person p JOIN p.phones ph WHERE ph.number = :number");
             query2.setParameter("number", number);
             Person temp = (Person) query2.getSingleResult();
             person.setId(temp.getId());
+
             person =  testIfZipOrHobbyExist(person);
-            
+
             em.merge(person);
             em.getTransaction().commit();
 
@@ -275,4 +278,52 @@ public class Facade implements IFacade {
           
     }
 
+    public boolean checkIfAddressExist(Address address) {
+        EntityManager em = emf.createEntityManager();
+        List<Address> queryAddress = new ArrayList();
+        try {
+            queryAddress = (List<Address>) em.createQuery(
+                    "SELECT a FROM Address a WHERE a.street = :street")
+                    .setParameter("street", address.getStreet()).getResultList();
+        } catch (Exception ex) {
+
+        } finally {
+            em.close();
+        }
+        if (!queryAddress.isEmpty()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public Hobby checkIfHobbyExist(String hobby) {
+        EntityManager em = emf.createEntityManager();
+        List<Hobby> hob = (List<Hobby>) em.createQuery("SELECT a FROM Hobby a WHERE a.name = :name")
+                .setParameter("name", hobby).getResultList();
+        if (!hob.isEmpty()) {
+            return hob.get(0);
+        }
+        return null;
+    }
+
+    public Phone checkifPhoneExists(String phone) {
+        EntityManager em = emf.createEntityManager();
+        List<Phone> hob = (List<Phone>) em.createQuery("SELECT a FROM Phone a WHERE a.number = :number")
+                .setParameter("number", phone).getResultList();
+        if (!hob.isEmpty()) {
+            return hob.get(0);
+        }
+        return null;
+    }
+
+    public CityInfo checkifZipExists(String zip) {
+        EntityManager em = emf.createEntityManager();
+        List<CityInfo> hob = (List<CityInfo>) em.createQuery("SELECT a FROM CityInfo a WHERE a.zip = :zip")
+                .setParameter("zip", zip).getResultList();
+        if (!hob.isEmpty()) {
+            return hob.get(0);
+        }
+        return null;
+    }
 }

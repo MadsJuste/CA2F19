@@ -11,20 +11,10 @@ package exceptions;
  */
 public class PhoneNotFoundException extends Exception {
 
-    /**
-     * Creates a new instance of <code>CustomerNotFoundException</code> without
-     * detail message.
-     */
-    public PhoneNotFoundException() {
+    public PhoneNotFoundException(String msg) {
+        super(msg);
     }
 
-    /**
-     * Constructs an instance of <code>CustomerNotFoundException</code> with the
-     * specified detail message.
-     *
-     * @param msg the detail message.
-     */
-    public PhoneNotFoundException(String msg) {
-       
+    public PhoneNotFoundException() {
     }
 }
