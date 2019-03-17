@@ -99,7 +99,7 @@ public class SQLGenerator {
         StringBuilder sb = new StringBuilder();
 
         for (int i = 0; i < amount; i++) {
-            sb.append("INSERT INTO `ca2`.`PERSON-HOBBY` (`hobbies_id`, `Persons_ID`) VALUES ('")
+            sb.append("INSERT INTO `ca2`.`PERSON_HOBBY` (`hobbies_id`, `Persons_ID`) VALUES ('")
                     .append(getNumber(1, hobbies.length))
                     .append("', '")
                     .append(getNumber(1, amount))
@@ -111,15 +111,15 @@ public class SQLGenerator {
     }
 
     public static void main(String[] args) {
-        System.out.println(generateAddresses(5000));
-        System.out.println("");
-        System.out.println(generateNames(5000));
-        System.out.println("");
-        System.out.println(generatePhones(5000));
-        System.out.println("");
+//        System.out.println(generateAddresses(500));
+////        System.out.println("");
+//        System.out.println(generateNames(1000));
+//        System.out.println("");
+//        System.out.println(generatePhones(500));
+//        System.out.println("");
         System.out.println(generateHobbies());
-        System.out.println("");
-        System.out.println(personHobbies(5000));
+//        System.out.println("");
+//        System.out.println(personHobbies(100));
     }
 
 }

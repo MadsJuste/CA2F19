@@ -134,19 +134,19 @@ public class FacadeTest {
         AllCitiesAndAllZipCodesDTO res = facade.getZipCodes();
         assertEquals(2, res.getCityzipMap().size());
     }
-
-    @Test
-
-    public void testCreatePerson() {
-        Person p = new Person("Jens", "Mikkelsen", "testser@madsen.com");
-        CityInfo ci = new CityInfo("2800");
-        Address ad = new Address("Nørregaardsvej 25");
-        ci.addAddress(ad);
-        ad.addPerson(p);
-        facade.createPerson(p);
-        PersonsByZipDTO res = facade.getPersonsByZip(ci);
-        //assertEquals(3, res.getPersons().size());
-    }
+//
+//    @Test
+//
+//    public void testCreatePerson() {
+//        Person p = new Person("Jens", "Mikkelsen", "testser@madsen.com");
+//        CityInfo ci = new CityInfo("2800");
+//        Address ad = new Address("Nørregaardsvej 25");
+//        ci.addAddress(ad);
+//        ad.addPerson(p);
+//        facade.createPerson(p);
+//        PersonsByZipDTO res = facade.getPersonsByZip(ci);
+//        //assertEquals(3, res.getPersons().size());
+//    }
 
     @Test
     public void testCreatePersonSimplified() {
