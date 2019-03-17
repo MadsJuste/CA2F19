@@ -125,20 +125,7 @@ public class PersonResource {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response editPersonByPhone(String content, @PathParam("phone") String phone) throws PhoneNotFoundException {
         PersonDTO p = gson.fromJson(content, PersonDTO.class);
-        Address address = new Address(p.getStreet());
-        CityInfo ci = new CityInfo(p.getZip(), p.getCity());
-        List<Hobby> hobbies = new ArrayList();
-        for (int i = 0; p.getHobbies().size() > i; i++) {
-            hobbies.add(new Hobby(p.getHobbies().get(i).getName()));
-        }
-        List<Phone> phones = new ArrayList();
-        /*for(int i = 0; p.getPhones().size() < i; i++){
-            phones.add(new Phone(p.getPhones().get(i).getNumber()));
-        }
-         */
-        address.setCityinfo(ci);
-
-        Person person = new Person(p.getFirstName(), p.getLastName(), p.getEmail(), address, phones, hobbies);
+        Person person = BuildPersonObject(p);
         PersonDTO pDTO = f.editPersonByPhone(person, phone);
         if (pDTO == null) {
             return Response.status(404)
@@ -175,21 +162,30 @@ public class PersonResource {
                     .type(MediaType.APPLICATION_JSON).
                     build();
         }
+       Person person = BuildPersonObject(p);
+        return Response.ok().entity(gson.toJson(f.createPerson(person))).build();
+    }
+    
+    
+    //Ved ikke hvorfor men jeg kan ikke tilføje Telefoner til Perosn objectet.
+    // vi vælger derfor at springe addering af telefoner over da resten af programmet virker uden.
+    public Person BuildPersonObject(PersonDTO p){
+        
+
         Address address = new Address(p.getStreet());
         CityInfo ci = new CityInfo(p.getZip(), p.getCity());
         List<Hobby> hobbies = new ArrayList();
         for (int i = 0; p.getHobbies().size() > i; i++) {
             hobbies.add(new Hobby(p.getHobbies().get(i).getName()));
         }
-
+        
         List<Phone> phones = new ArrayList();
-        /*for(int i = 0; p.getPhones().size() < i; i++){
-            phones.add(new Phone(p.getPhones().get(i).getNumber()));
-        }*/
+        
 
         address.setCityinfo(ci);
 
         Person person = new Person(p.getFirstName(), p.getLastName(), p.getEmail(), address, phones, hobbies);
-        return Response.ok().entity(gson.toJson(f.createPerson(person))).build();
+        
+        return person;
     }
 }

@@ -146,7 +146,38 @@ public class Facade implements IFacade {
             em.getTransaction().begin();
 
 
-            person = testIfZipOrHobbyExist(person);
+            //person = testIfZipOrHobbyExist(person);
+               Query query = em.createQuery(
+                    "SELECT COUNT(h) FROM Hobby AS h WHERE h.name = :name");
+             query.setParameter("name", person.getHobbies().get(0).getName());
+
+            long q = (long) query.getSingleResult();
+            
+            if(q == 1){
+                query = em.createQuery(
+                    "SELECT h FROM Hobby AS h WHERE h.name = :name");
+                query.setParameter("name", person.getHobbies().get(0).getName());
+
+                Hobby h = (Hobby) query.getSingleResult();
+                person.getHobbies().set(0, h);
+            }
+          
+          //check that Zip is not already in the db
+            
+             query = em.createQuery(
+                    "SELECT COUNT(z) FROM CityInfo AS z WHERE z.zip = :zip");
+             query.setParameter("zip", person.getAddress().getCityinfo().getZip());
+
+            q = (long) query.getSingleResult();
+            
+            if(q == 1){
+                query = em.createQuery(
+                    "SELECT z FROM CityInfo AS z WHERE z.zip = :zip");
+                query.setParameter("zip", person.getAddress().getCityinfo().getZip());
+
+                CityInfo ci = (CityInfo) query.getSingleResult();
+                person.getAddress().setCityinfo(ci);
+            }
            
 
             em.persist(person);
@@ -171,12 +202,44 @@ public class Facade implements IFacade {
             Person temp = (Person) query2.getSingleResult();
             person.setId(temp.getId());
 
-            person =  testIfZipOrHobbyExist(person);
+            
+             Query query = em.createQuery(
+                    "SELECT COUNT(h) FROM Hobby AS h WHERE h.name = :name");
+             query.setParameter("name", person.getHobbies().get(0).getName());
+
+            long q = (long) query.getSingleResult();
+            
+            if(q == 1){
+                query = em.createQuery(
+                    "SELECT h FROM Hobby AS h WHERE h.name = :name");
+                query.setParameter("name", person.getHobbies().get(0).getName());
+
+                Hobby h = (Hobby) query.getSingleResult();
+                person.getHobbies().set(0, h);
+            }
+          
+          //check that Zip is not already in the db
+            
+             query = em.createQuery(
+                    "SELECT COUNT(z) FROM CityInfo AS z WHERE z.zip = :zip");
+             query.setParameter("zip", person.getAddress().getCityinfo().getZip());
+
+            q = (long) query.getSingleResult();
+            
+            if(q == 1){
+                query = em.createQuery(
+                    "SELECT z FROM CityInfo AS z WHERE z.zip = :zip");
+                query.setParameter("zip", person.getAddress().getCityinfo().getZip());
+
+                CityInfo ci = (CityInfo) query.getSingleResult();
+                person.getAddress().setCityinfo(ci);
+            }
+          
 
             em.merge(person);
             em.getTransaction().commit();
 
-            Query query = em.createQuery(
+            query = em.createQuery(
                     "SELECT NEW dto.PersonDTO(a) FROM Person AS a WHERE a.id = :id",
                     PersonDTO.class)
                     .setParameter("id", person.getId());
@@ -226,59 +289,6 @@ public class Facade implements IFacade {
         }
     }
     
-    public Person testIfZipOrHobbyExist(Person person){
-        EntityManager em = emf.createEntityManager();
-            //Check that Hobby is not already in the db VIRKER IKKE!
-            /*
-          for(int i = 0; i < person.getHobbies().size(); i++){  
-             Query query = em.createQuery(
-                    "SELECT h FROM Hobby AS h WHERE h.name = :name");
-             query.setParameter("name", person.getHobbies().get(i).getName());
-
-            Hobby h = (Hobby) query.getSingleResult();
-            
-            if(h.getName().equals(person.getHobbies().get(i).getName())){
-                person.getHobbies().set(i, h);
-            }
-          }*/
-            
-             Query query = em.createQuery(
-                    "SELECT COUNT(h) FROM Hobby AS h WHERE h.name = :name");
-             query.setParameter("name", person.getHobbies().get(0).getName());
-
-            long q = (long) query.getSingleResult();
-            
-            if(q == 1){
-                query = em.createQuery(
-                    "SELECT h FROM Hobby AS h WHERE h.name = :name");
-                query.setParameter("name", person.getHobbies().get(0).getName());
-
-                Hobby h = (Hobby) query.getSingleResult();
-                person.getHobbies().set(0, h);
-            }
-          
-          //check that Zip is not already in the db
-            
-             query = em.createQuery(
-                    "SELECT COUNT(z) FROM CityInfo AS z WHERE z.zip = :zip");
-             query.setParameter("zip", person.getAddress().getCityinfo().getZip());
-
-            q = (long) query.getSingleResult();
-            
-            if(q == 1){
-                query = em.createQuery(
-                    "SELECT z FROM CityInfo AS z WHERE z.zip = :zip");
-                query.setParameter("zip", person.getAddress().getCityinfo().getZip());
-
-                CityInfo ci = (CityInfo) query.getSingleResult();
-                person.getAddress().setCityinfo(ci);
-            }
-          
-          
-            return person;
-          
-    }
-
     public boolean checkIfAddressExist(Address address) {
         EntityManager em = emf.createEntityManager();
         List<Address> queryAddress = new ArrayList();
