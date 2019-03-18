@@ -5,14 +5,16 @@
  */
 package rest;
 
+import com.google.gson.Gson;
+import facade.Facade;
+import javax.persistence.Persistence;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
-import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
-import javax.ws.rs.PUT;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 /**
  * REST Web Service
@@ -21,33 +23,22 @@ import javax.ws.rs.core.MediaType;
  */
 @Path("zip")
 public class ZipResource {
+    
+    Gson gson = new Gson();
 
     @Context
     private UriInfo context;
 
-    /**
-     * Creates a new instance of ZipResource
-     */
+    Facade f = new Facade(Persistence.createEntityManagerFactory("pu"));
+
     public ZipResource() {
     }
 
-    /**
-     * Retrieves representation of an instance of rest.ZipResource
-     * @return an instance of java.lang.String
-     */
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public String getZipCodes() {
-        //TODO return proper representation object
-        throw new UnsupportedOperationException();
+    public Response getZipCodes() {
+      return Response.ok().entity(gson.toJson(f.getZipCodes())).build();
     }
-
-    /**
-     * PUT method for updating or creating an instance of ZipResource
-     * @param content representation for the resource
-     */
-    @PUT
-    @Consumes(MediaType.APPLICATION_JSON)
-    public void putJson(String content) {
     }
+    
 }

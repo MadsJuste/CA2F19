@@ -38,7 +38,7 @@ import javax.ws.rs.core.Response;
 @Path("person")
 public class PersonResource {
 
-    Gson gson = new GsonBuilder().setPrettyPrinting().create();
+    Gson gson = new Gson();
 
     @Context
     private UriInfo context;
