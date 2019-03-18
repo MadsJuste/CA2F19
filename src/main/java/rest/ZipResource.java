@@ -39,6 +39,5 @@ public class ZipResource {
     public Response getZipCodes() {
       return Response.ok().entity(gson.toJson(f.getZipCodes())).build();
     }
-    }
     
 }
